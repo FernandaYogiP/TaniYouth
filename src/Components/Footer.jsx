@@ -1,7 +1,15 @@
 import { WhiteLogo } from '../assets/image';
-import { RiInstagramLine, RiTiktokLine, RiYoutubeLine, RiPhoneLine, RiMailLine, RiMapPinLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+import { RiInstagramLine, RiTiktokLine, RiYoutubeLine, RiPhoneLine, RiMailLine, RiMapPinLine, RiSendPlane2Line } from 'react-icons/ri';
 
 const Footer = () => {
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     return (
         <footer className="bg-[#114232] text-white p-8 font-poppins">
             <div className="container mx-auto flex justify-between items-start">
@@ -23,33 +31,38 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-1/4 flex flex-col space-y-4 ml-24 mt-12">
+                <div className="w-1/4 flex flex-col space-y-4 ml-24 mt-14">
                     <h3 className="font-bold text-xl">Navigasi</h3>
                     <div className="space-y-3">
-                        <a href="#" className="flex items-center gap-2 hover:text-[#326B59] text-base">
+                        <Link to="/about-us" onClick={scrollToTop} className="flex items-center gap-2 hover:text-[#326B59] text-base">
                             <span>Tentang Kami</span>
-                        </a>
-                        <a href="#" className="flex items-center gap-2 hover:text-[#326B59] text-base">
+                        </Link>
+                        <Link to="/articles/knowledge" onClick={scrollToTop} className="flex items-center gap-2 hover:text-[#326B59] text-base">
                             <span>Artikel</span>
-                        </a>
-                        <a href="#" className="flex items-center gap-2 hover:text-[#326B59] text-base">
+                        </Link>
+                        <Link to="/news" onClick={scrollToTop} className="flex items-center gap-2 hover:text-[#326B59] text-base">
                             <span>Berita</span>
-                        </a>
-                        <a href="#" className="flex items-center gap-2 hover:text-[#326B59] text-base">
+                        </Link>
+                        <Link to="/modules/edukasi-buku" onClick={scrollToTop} className="flex items-center gap-2 hover:text-[#326B59] text-base">
                             <span>Modul</span>
-                        </a>
-                        <a href="#" className="flex items-center gap-2 hover:text-[#326B59] text-base">
+                        </Link>
+                        <Link to="/forum" onClick={scrollToTop} className="flex items-center gap-2 hover:text-[#326B59] text-base">
                             <span>Forum Diskusi</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
-                <div className="space-y-4 w-1/4 mt-12">
+                <div className="space-y-4 w-1/4 mt-14">
                     <h3 className="font-bold text-xl">Forum Diskusi</h3>
-                    <input 
-                        type="text" 
-                        placeholder="Kirim Pesan" 
-                        className="p-2 text-black text-sm w-full rounded-md font-poppins" 
-                    />
+                    <div className="flex">
+                        <input 
+                            type="text" 
+                            placeholder="Kirim Pesan" 
+                            className="p-2 text-black text-sm w-1/2 rounded-l-md font-poppins" 
+                        />
+                        <button className="bg-[#326B59] text-white p-2 rounded-r-md hover:bg-[#2a5548]">
+                            <RiSendPlane2Line className="text-xl" />
+                        </button>
+                    </div>
                     <h3 className="font-bold text-xl mt-4">Ikuti Kami</h3>
                     <div className="flex space-x-6">
                         <a href="#" className="hover:text-[#326B59] text-2xl">
@@ -64,7 +77,8 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-8 text-center">
+            <hr className="my-4 border-t border-white opacity-50" />
+            <div className="text-center">
                 <p className="text-sm">© 2024 PetaniGO Organization. All rights reserved.</p>
             </div>
         </footer>

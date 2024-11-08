@@ -1,9 +1,42 @@
-import React from 'react';
-import { HomeImage, UsImage, HomeDownImage, HomeModulesImage } from '../assets/image'; // Pastikan home_modules.png diimpor dengan benar
+import { 
+    HomeImage, 
+    UsImage, 
+    HomeDownImage, 
+    HomeModulesImage,
+    HomeArticle1,
+    HomeArticle2,
+    HomeArticle3,
+    HomeNews1,
+    HomeNews2,
+    HomeNews3,
+    Watermark
+} from '../assets/image';
+import { RiBookLine, RiVideoLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    const cardClasses = {
+        wrapper: "w-1/4",
+        card: "border border-gray-200 rounded-lg overflow-hidden shadow-lg h-[280px] flex flex-col",
+        imageContainer: "relative h-48",
+        image: "w-full h-full object-cover",
+        watermarkContainer: "absolute bottom-0 left-0 w-full",
+        watermark: "w-full h-full object-cover grayscale",
+        titleContainer: "bg-[#114232] text-white p-3 flex-grow flex items-center",
+        title: "text-lg font-medium line-clamp-2",
+        button: "border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition"
+    };
+
     return (
         <main>
+            {/* Hero Section */}
             <section className="relative w-full h-[500px] overflow-hidden">
                 <img 
                     src={HomeImage} 
@@ -18,6 +51,8 @@ const Home = () => {
                     </h1>
                 </div>
             </section>
+
+            {/* About Section */}
             <section className="p-8 bg-[#114232] text-white">
                 <div className="flex items-center space-x-8 max-w-6xl mx-auto">
                     <div className="w-1/2 flex justify-center">
@@ -41,110 +76,219 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className="bg-white text-[#114232] p-8">
-                <h2 className="text-2xl font-bold mb-4">Info dan Wawasan</h2>
-                <div className="grid grid-cols-4 gap-4 mb-4">
-                    <div className="flex items-start mb-4">
-                        <button className="border border-blue-600 text-blue-600 flex items-center px-4 py-2 rounded hover:bg-blue-100 transition ml-14 mt-20">
-                            Artikel Selengkapnya 
-                            <svg className="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div className="bg-green-700 px-0 w-64 rounded-md">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 1" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold text-white">Judul Berita Pertanian 1</h3>
-                        <p className='text-white'>Deskripsi singkat berita pertanian 1.</p>
-                    </div>
-                    <div className="bg-gray-100 px-0 w-64 rounded-md">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 2" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold">Judul Berita Pertanian 2</h3>
-                        <p>Deskripsi singkat berita pertanian 2.</p>
-                    </div>
-                    <div className="bg-gray-100 px-0 w-64 rounded-md">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 3" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold">Judul Berita Pertanian 3</h3>
-                        <p>Deskripsi singkat berita pertanian 3.</p>
-                    </div>
-                </div>
 
-                <div className="grid grid-cols-4 gap-4">
-                    <div className="flex items-start mb-4">
-                        <button className="border border-lime-700 text-lime-700 flex items-center px-4 py-2 rounded hover:bg-lime-100 transition ml-14 mt-20">
-                            Berita Selengkapnya 
-                            <svg className="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
-                            </svg>
-                        </button>
+            {/* Info Section */}
+            <section className="bg-white text-[#114232] p-8">
+                <div className="max-w-6xl mx-auto">
+                    <h2 className="text-2xl font-bold mb-8">INFO DAN WAWASAN</h2>
+                    
+                    {/* Artikel Row */}
+                    <div className="flex gap-8 mb-8">
+                        <div className={cardClasses.wrapper}>
+                            <div className="h-[280px] flex items-end pb-8">
+                                <Link to="/articles/knowledge" onClick={scrollToTop} className={cardClasses.button}>
+                                    Artikel Selengkapnya →
+                                </Link>
+                            </div>
+                        </div>
+                        {/* Card 1 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeArticle1} 
+                                        alt="Budidaya Padi Organik" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Budidaya Padi Organik</h3>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Card 2 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeArticle2} 
+                                        alt="Cara Tebar Benih Padi" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Cara Tebar Benih Padi Yang Tepat</h3>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Card 3 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeArticle3} 
+                                        alt="Pengendalian Hama" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Pengendalian Hama Penyakit Padi Sawah</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="bg-gray-100 px-0 w-64 rounded">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 4" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold">Judul Berita Pertanian 4</h3>
-                        <p>Deskripsi singkat berita pertanian 4.</p>
-                    </div>
-                    <div className="bg-gray-100 px-0 w-64 rounded">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 5" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold">Judul Berita Pertanian 5</h3>
-                        <p>Deskripsi singkat berita pertanian 5.</p>
-                    </div>
-                    <div className="bg-gray-100 px-0 w-64 rounded">
-                        <img 
-                            src="https://placehold.co/300x200" 
-                            alt="Agricultural news 6" 
-                            className="w-full h-40 object-cover rounded mb-2 max-w-[300px] min-w-[100px]"
-                        />
-                        <h3 className="font-bold">Judul Berita Pertanian 6</h3>
-                        <p>Deskripsi singkat berita pertanian 6.</p>
+
+                    {/* Berita Row */}
+                    <div className="flex gap-8">
+                        <div className={cardClasses.wrapper}>
+                            <div className="h-[280px] flex items-end pb-8">
+                                <Link to="/news" onClick={scrollToTop} className={cardClasses.button}>
+                                    Berita Selengkapnya →
+                                </Link>
+                            </div>
+                        </div>
+                        {/* News Card 1 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeNews1} 
+                                        alt="Program Cetak Sawah" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Pemerintah Luncurkan Program Cetak Sawah untuk Perkuat Ketahanan Pangan</h3>
+                                </div>
+                            </div>
+                        </div>
+                        {/* News Card 2 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeNews2} 
+                                        alt="Jambore Tani 2024" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Jambore Tani 2024, Inovasi dan Kolaborasi di Sektor Pertanian</h3>
+                                </div>
+                            </div>
+                        </div>
+                        {/* News Card 3 */}
+                        <div className={cardClasses.wrapper}>
+                            <div className={cardClasses.card}>
+                                <div className={cardClasses.imageContainer}>
+                                    <img 
+                                        src={HomeNews3} 
+                                        alt="Dukung Swasembada" 
+                                        className={cardClasses.image}
+                                    />
+                                    <div className={cardClasses.watermarkContainer}>
+                                        <img 
+                                            src={Watermark} 
+                                            alt="Petani GO Watermark" 
+                                            className={cardClasses.watermark}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={cardClasses.titleContainer}>
+                                    <h3 className={cardClasses.title}>Dukung Swasembada Pangan, Polri Akan Rekrut Bintara Lulusan SMK Pertanian</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            {/* Module Section */}
             <section 
                 className="p-8"
                 style={{ backgroundImage: `url(${HomeDownImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-                <h2 className="text-2xl font-bold mb-4 text-[#114232]">Modul</h2>
-                <p className="text-lg leading-relaxed mb-6 text-[#114232]">
-                    Bagaimana kita belajar untuk budidaya pertanian?
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                    <div 
-                        className="bg-gray-100 h-64 rounded"
-                        style={{ backgroundImage: `url(${HomeModulesImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                    >
-                        <div className="p-8">
-                            <h3 className="font-bold text-white">Modul Pembelajaran 1</h3>
-                            <p className="text-white">modul pembelajaran 1.</p>
+                <div className="max-w-6xl mx-auto">
+                    {/* Header dan Deskripsi */}
+                    <div className="grid grid-cols-12 mb-8">
+                        <div className="col-span-3">
+                            <h2 className="text-2xl font-bold mb-4 text-[#114232]">Modul</h2>
+                            <p className="text-lg leading-relaxed text-[#114232]">
+                                Bagaimana kita belajar untuk budidaya pertanian?
+                            </p>
+                        </div>
+                        <div className="col-span-6 col-start-6 ml-28">
+                            <p className="text-lg leading-relaxed text-[#114232]">
+                                Berfokus pada keberlanjutan, kami memiliki tiga fokus utama untuk meningkatkan produktivitas petani kecil: pembangunan ekonomi, pertanian regeneratif, dan ketahanan iklim.
+                            </p>
                         </div>
                     </div>
-                    <div 
-                        className="bg-gray-100 h-64 rounded"
-                        style={{ backgroundImage: `url(${HomeModulesImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                    >
-                        <div className="p-8">
-                            <h3 className="font-bold text-white">Modul Pembelajaran 2</h3>
-                            <p className="text-white">modul pembelajaran 2.</p>
-                        </div>
+
+                    {/* Card Modul */}
+                    <div className="grid grid-cols-2 gap-8">
+                        <Link to="/modules/edukasi-buku" onClick={scrollToTop} className="bg-[#114232] h-80 rounded-lg relative overflow-hidden">
+                            <div className="absolute right-0 bottom-0">
+                                <img src={HomeModulesImage} alt="Module decoration" className="opacity-30" />
+                            </div>
+                            <div className="p-8 flex flex-col justify-center h-full relative z-10">
+                                <div className="flex flex-col items-start">
+                                    <RiBookLine className="text-white text-3xl mb-2" />
+                                    <h3 className="font-bold text-white text-2xl mb-4">
+                                        Modul Pembelajaran
+                                    </h3>
+                                </div>
+                                <p className="text-white text-lg">Selengkapnya ➔</p>
+                            </div>
+                        </Link>
+                        <Link to="/modules/edukasi-video" onClick={scrollToTop} className="bg-[#114232] h-80 rounded-lg relative overflow-hidden">
+                            <div className="absolute right-0 bottom-0">
+                                <img src={HomeModulesImage} alt="Module decoration" className="opacity-30" />
+                            </div>
+                            <div className="p-8 flex flex-col justify-center h-full relative z-10">
+                                <div className="flex flex-col items-start">
+                                    <RiVideoLine className="text-white text-3xl mb-2" />
+                                    <h3 className="font-bold text-white text-2xl mb-4">
+                                        Modul Pembelajaran
+                                    </h3>
+                                </div>
+                                <p className="text-white text-lg">Selengkapnya ➔</p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </section>

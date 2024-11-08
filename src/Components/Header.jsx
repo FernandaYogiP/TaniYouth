@@ -2,30 +2,32 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../assets/image';
 
-
 const Header = () => {
-    const [isArticleDropdownOpen, setArticleDropdownOpen] = useState(false);
-    const [isModuleDropdownOpen, setModuleDropdownOpen] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(null);
 
-    const toggleArticleDropdown = () => {
-        setArticleDropdownOpen(!isArticleDropdownOpen);
+    const toggleDropdown = (dropdownName) => {
+        if (activeDropdown === dropdownName) {
+            setActiveDropdown(null);
+        } else {
+            setActiveDropdown(dropdownName);
+        }
     };
 
-    const toggleModuleDropdown = () => {
-        setModuleDropdownOpen(!isModuleDropdownOpen);
+    const handleDropdownItemClick = () => {
+        setActiveDropdown(null);
     };
 
     return (
         <header className="bg-white text-[#114232] p-4 pb-10 flex justify-between items-center text-xl">
-            <div className="flex items-center">
+            <Link to="/" className="flex items-center">
                 <img src={Logo} alt="Petani GO logo" className="h-20 w-auto mr-3" />
                 <span className="font-bold text-2xl ml-4">Petani GO</span>
-            </div>
+            </Link>
             <nav className="flex items-center space-x-16">
-                <Link to="/" className="hover:text-[#326B59] transition font-poppins">Tentang Kami</Link>
+                <Link to="/about-us" className="hover:text-[#326B59] transition font-poppins">Tentang Kami</Link>
                 <div className="relative">
                     <button 
-                        onClick={toggleArticleDropdown} 
+                        onClick={() => toggleDropdown('article')} 
                         className="flex items-center hover:text-[#326B59] focus:outline-none transition"
                     >
                         <span>Artikel</span>
@@ -39,18 +41,36 @@ const Header = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    {isArticleDropdownOpen && (
-                        <div className="absolute left-0 mt-2 bg-[#114232] shadow-lg rounded-lg z-10">
-                            <Link to="/articles/knowledge" className="block px-4 py-2 hover:bg-[#326B59] text-white transition">Pengetahuan</Link>
-                            <Link to="/articles/cultivation" className="block px-4 py-2 hover:bg-[#326B59] text-white transition">Budidaya tani</Link>
-                            <Link to="/articles/solutions" className="block px-4 py-2 hover:bg-[#326B59] text-white transition">Solusi Masalah</Link>
+                    {activeDropdown === 'article' && (
+                        <div className="absolute left-0 mt-2 w-48 bg-[#114232] shadow-lg rounded-lg overflow-hidden z-10">
+                            <Link 
+                                to="/articles/knowledge" 
+                                className="block px-4 py-2 hover:bg-[#326B59] text-white transition"
+                                onClick={handleDropdownItemClick}
+                            >
+                                Pengetahuan
+                            </Link>
+                            <Link 
+                                to="/articles/cultivation" 
+                                className="block px-4 py-2 hover:bg-[#326B59] text-white transition"
+                                onClick={handleDropdownItemClick}
+                            >
+                                Budidaya Tani
+                            </Link>
+                            <Link 
+                                to="/articles/solutions" 
+                                className="block px-4 py-2 hover:bg-[#326B59] text-white transition"
+                                onClick={handleDropdownItemClick}
+                            >
+                                Solusi Masalah
+                            </Link>
                         </div>
                     )}
                 </div>
                 <Link to="/news" className="hover:text-[#326B59] transition">Berita</Link>
                 <div className="relative">
                     <button 
-                        onClick={toggleModuleDropdown} 
+                        onClick={() => toggleDropdown('module')} 
                         className="flex items-center hover:text-[#326B59] focus:outline-none transition"
                     >
                         <span>Modul</span>
@@ -64,10 +84,22 @@ const Header = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    {isModuleDropdownOpen && (
-                        <div className="absolute left-0 mt-2 bg-[#114232] shadow-lg rounded-lg z-10">
-                            <Link to="/modules/edukasi-buku" className="block px-4 py-2 hover:bg-[#326B59] text-white transition">Edukasi Buku</Link>
-                            <Link to="/modules/edukasi-video" className="block px-4 py-2 hover:bg-[#326B59] text-white transition">Edukasi Video</Link>
+                    {activeDropdown === 'module' && (
+                        <div className="absolute left-0 mt-2 w-48 bg-[#114232] shadow-lg rounded-lg overflow-hidden z-10">
+                            <Link 
+                                to="/modules/edukasi-buku" 
+                                className="block px-4 py-2 hover:bg-[#326B59] text-white transition"
+                                onClick={handleDropdownItemClick}
+                            >
+                                Edukasi Buku
+                            </Link>
+                            <Link 
+                                to="/modules/edukasi-video" 
+                                className="block px-4 py-2 hover:bg-[#326B59] text-white transition"
+                                onClick={handleDropdownItemClick}
+                            >
+                                Edukasi Video
+                            </Link>
                         </div>
                     )}
                 </div>
