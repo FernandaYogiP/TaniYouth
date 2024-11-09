@@ -1,3 +1,12 @@
+# Dependencies
+node_modules
+node_modules/
+
+# Build
+dist
+dist-ssr
+*.local
+
 # Logs
 logs
 *.log
@@ -6,11 +15,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
 
 # Editor directories and files
 .vscode/*
@@ -23,4 +27,19 @@ dist-ssr
 *.sln
 *.sw?
 
-node_modules/
+# Environment
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Vite
+.vite/
+*.timestamp-*.mjs
+
+# Testing
+coverage/
+
+# Production
+build/
