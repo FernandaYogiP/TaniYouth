@@ -1,4 +1,5 @@
 import React from 'react';
+import { GambarBerita } from '../assets/image';
 
 const News = () => {
     const articles = Array.from({ length: 9 }, (_, index) => ({
@@ -8,7 +9,7 @@ const News = () => {
         time: "12:57 WIB",
         author: "Aris Kurniawan",
         source: "SindoNews.com",
-        image: "https://placehold.co/300x200",
+        image: GambarBerita,
     }));
 
     return (

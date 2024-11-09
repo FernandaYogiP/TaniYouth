@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../assets/image';
+import Login from '../Pages/Login';
 
 const Header = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
@@ -105,7 +106,8 @@ const Header = () => {
                 </div>
                 <Link to="/forum" className="hover:text-[#326B59] transition">Forum Diskusi</Link>
             </nav>
-            <button className="bg-[#114232] hover:bg-[#326B59] text-white px-4 py-10 rounded-b-xl transition h-20 -mt-10 text-xl font-bold">Login</button>
+            <button className="bg-[#114232] hover:bg-[#326B59] text-white px-4 py-10 rounded-b-xl transition h-20 -mt-10 text-xl font-bold">
+                <Link to="/Pages/Login">Login</Link></button>
         </header>
     );
 };

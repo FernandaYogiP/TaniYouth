@@ -23,4 +23,5 @@ export { default as BookImage3 } from './modules/book3.png';
 export { default as VideoImage1 } from './modules/video1.png';
 export { default as VideoImage2 } from './modules/video2.png';
 export { default as VideoImage3 } from './modules/video3.png';
+export {default as GambarBerita} from './berita/gambar_berita.jpg'
 // Tambahkan ekspor lainnya sesuai kebutuhan
