@@ -3,7 +3,7 @@ import Footer from './Components/Footer';
 import Home from './Pages/Home';
 import AboutUs from './Pages/AboutUs';
 import Header from './Components/Header';
-import News from './Pages/news';
+import News from './Pages/News';
 import Forum from './Pages/Forum';
 import Knowledge from './Pages/Articles/Knowledge';
 import Cultivation from './Pages/Articles/Cultivation';
@@ -16,6 +16,7 @@ import Book from './Pages/Module/Book';
 import Video from './Pages/Module/Video';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
+import DetailNews from './Pages/DetailNews';
 
 // Wrapper component untuk mengecek path
 function AppContent() {
@@ -42,6 +43,7 @@ function AppContent() {
                 <Route path="/modules/edukasi-video" element={<Video />} />
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
+                <Route path="/Pages/DetailNews" element={<DetailNews />} />
             </Routes>
 
             {showHeaderFooter && <Footer />}
