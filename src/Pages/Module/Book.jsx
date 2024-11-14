@@ -139,7 +139,7 @@ const Book = () => {
 
     return (
         <div className="bg-white text-[#114232] font-poppins">
-            <div className="bg-[#114232] text-white text-center py-4 mb-8 -mx-8">
+            <div className="bg-[#114232] text-white text-center py-4 mb-8">
                 <h1 className="text-3xl font-bold">EDUKASI BUKU</h1>
             </div>
             <div className="p-8">
