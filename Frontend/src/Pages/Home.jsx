@@ -32,7 +32,7 @@ const Home = () => {
     titleContainer: "bg-[#114232] text-white p-3 flex-grow flex items-center",
     title: "text-lg font-medium line-clamp-2",
     button:
-      "border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition",
+      "border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition duration-300 ease-in-out",
   };
 
   return (
