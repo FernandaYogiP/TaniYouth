@@ -2,18 +2,37 @@ import React, { useState } from 'react'
 import { WhiteLogo } from '../assets/image'
 import { Link, useNavigate } from 'react-router-dom'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
+import axios from 'axios'
 
 const Login = () => {
   const navigate = useNavigate();
+  const [username, setUsername] =  useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate('/'); // Navigate to home page
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); ///oooooo
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const respon = await axios.post("http://localhost:3000/login", 
+      {username, password}
+      );
+      localStorage.setItem("token", respon.data.token);
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || "Ada Kesalahan!")
+      } else {
+        setError("Login gagal:(")
+      }
+    }
   };
 
   return (
@@ -36,6 +55,8 @@ const Login = () => {
           type="text"
           className="w-full p-3 border-2 border-[#114232] rounded-full focus:outline-none focus:ring-2 focus:ring-[#326B59] text-[#114232]"
           placeholder="Masukkan username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
 
@@ -48,6 +69,8 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             className="w-full p-3 border-2 border-[#114232] rounded-full focus:outline-none focus:ring-2 focus:ring-[#326B59] text-[#114232] pr-10"
             placeholder="Masukkan password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} //done kak
           />
           <button
             type="button"
@@ -67,9 +90,11 @@ const Login = () => {
 
       <button
         type="submit"
-        className="w-full bg-[#114232] text-white py-3 rounded-full hover:bg-[#326B59] transition duration-300"
+        className={`w-full bg-[#114232] text-white py-3 rounded-full hover:bg-[#326B59] transition duration-300 ${loading && "opacity-50 cursor-not-allowed"}`}
+        disabled={loading}
       >
-        Login
+      {loading ? "Login in" : "Login in"}
+
       </button>
 
       <div className="text-center text-[#114232]">

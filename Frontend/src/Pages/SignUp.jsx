@@ -3,14 +3,34 @@ import { WhiteLogo } from '../assets/image'
 import { Link, useNavigate } from 'react-router-dom'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 import { RiGoogleFill } from "react-icons/ri"
+import axios from 'axios'
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [username, setUsername] =  useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState(""); //gas kak
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/Pages/Login');
+    setLoading(true);
+    setError("");
+    try {
+      const respon = await axios.post("http://localhost:3000/signup", 
+      {username, email, password}
+      );
+      localStorage.setItem("token", respon.data.token);
+      navigate("/Pages/Login");
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || "Ada Kesalahan!")
+      } else {
+        setError("Gagal untuk mendaftar, coba beberapa saat lagi:(")
+      }
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -37,6 +57,8 @@ const SignUp = () => {
               type="text"
               className="w-full p-3 border-2 border-[#114232] rounded-full focus:outline-none focus:ring-2 focus:ring-[#326B59] text-[#114232]"
               placeholder="Masukkan username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -48,6 +70,8 @@ const SignUp = () => {
               type="email"
               className="w-full p-3 border-2 border-[#114232] rounded-full focus:outline-none focus:ring-2 focus:ring-[#326B59] text-[#114232]"
               placeholder="Masukkan email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -60,6 +84,8 @@ const SignUp = () => {
                 type={showPassword ? "text" : "password"}
                 className="w-full p-3 border-2 border-[#114232] rounded-full focus:outline-none focus:ring-2 focus:ring-[#326B59] text-[#114232] pr-10"
                 placeholder="Masukkan password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="button"
@@ -73,9 +99,11 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#114232] text-white py-3 rounded-full hover:bg-[#326B59] transition duration-300"
+            className={`w-full bg-[#114232] text-white py-3 rounded-full hover:bg-[#326B59] transition duration-300 ${loading && "opacity-50 cursor-not-allowed"}`}
+            disabled={loading}
+
           >
-            Create Account
+            {loading ? "Creating Account" : "Creating Account"}
           </button>
 
           <div className="text-center text-[#114232] font-bold">
@@ -96,7 +124,7 @@ const SignUp = () => {
               Login
             </Link>
           </div>
-        </form>
+        </form> 
       </div>
 
       {/* Right Section */}
