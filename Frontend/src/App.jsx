@@ -17,6 +17,10 @@ import Video from './Pages/Module/Video';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import DetailNews from './Pages/DetailNews';
+import DiseaseDetection from './Pages/DiseaseDetection';
+import Profile from './Pages/Profile';
+import { ToastContainer } from 'react-toastify';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // Wrapper component untuk mengecek path
 function AppContent() {
@@ -27,6 +31,8 @@ function AppContent() {
     return (
         <div className="bg-green-900 text-white relative min-h-screen">
             {showHeaderFooter && <Header />}
+            <ToastContainer />
+
             
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -41,9 +47,11 @@ function AppContent() {
                 <Route path="/articles/cultivation/:id" element={<DetailCultivation />} />
                 <Route path="/modules/edukasi-buku" element={<Book />} />
                 <Route path="/modules/edukasi-video" element={<Video />} />
+                <Route path="/disease-detection" element={<DiseaseDetection />} />
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
                 <Route path="/Pages/DetailNews" element={<DetailNews />} />
+                <Route path="profile" element={<Profile />} />
             </Routes>
 
             {showHeaderFooter && <Footer />}
@@ -54,9 +62,11 @@ function AppContent() {
 
 const App = () => {
     return (
+        <GoogleOAuthProvider clientId='622871264591-lpkikd659631n72aa7afmbp14s6g00eg.apps.googleusercontent.com'>
         <Router>
             <AppContent />
         </Router>
+        </GoogleOAuthProvider>
     );
 };
 

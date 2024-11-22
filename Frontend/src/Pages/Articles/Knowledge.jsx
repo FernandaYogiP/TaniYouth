@@ -73,7 +73,7 @@ const Knowledge = () => {
             </div>
             <div className="p-8">
                 <div className="flex justify-end mb-8">
-                    <div className="relative w-64">
+                    <div className="relative w-full max-w-xs">
                         <input
                             type="text"
                             placeholder="Cari..."
@@ -90,36 +90,36 @@ const Knowledge = () => {
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {currentArticles.map((article) => (
-                        <div key={article.id} className="flex flex-col">
-                            <div className="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
-                                <div className="relative">
+                        <div key={article.id} className="flex flex-col group">
+                            <div className="border border-gray-200 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                                <div className="relative overflow-hidden">
                                     <img 
                                         src={article.image} 
                                         alt={article.title} 
-                                        className="w-full h-48 object-cover" 
+                                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" 
                                     />
                                     <div className="absolute bottom-0 left-0 w-full">
                                         <img 
                                             src={Watermark} 
                                             alt="Petani GO Watermark" 
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-100"
                                         />
                                     </div>
                                 </div>
                                 <div className="p-4">
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-gray-500 transition-colors duration-300 group-hover:text-[#114232]">
                                         {article.author} / {article.date}
                                     </p>
                                 </div>
-                                <div className="bg-[#114232] text-white p-3 text-center">
+                                <div className="bg-[#114232] text-white p-3 text-center transition-colors duration-300 hover:bg-[#326B59]">
                                     <h2 className="text-lg font-bold">{article.title}</h2>
                                 </div>
                             </div>
                             <Link 
                                 to={`/articles/${article.category}/${article.id}`}
-                                className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition w-fit self-start"
+                                className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition-all duration-300 hover:shadow-md transform hover:-translate-y-1 w-fit self-start"
                             >
                                 Baca Artikel →
                             </Link>
@@ -134,7 +134,7 @@ const Knowledge = () => {
                 )}
                 
                 {/* Pagination */}
-                <div className="flex justify-center mt-8">
+                <div className="flex justify-center mt-8 flex-wrap">
                     <button 
                         className={`mx-2 ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:text-[#1a5c45]'}`}
                         onClick={() => paginate(currentPage - 1)}
