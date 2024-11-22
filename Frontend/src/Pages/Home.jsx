@@ -13,8 +13,24 @@ import {
 } from "../assets/image";
 import { RiBookLine, RiVideoLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Pastikan Anda mengimpor CSS Toastify
+import { useEffect } from 'react';
+
+
 
 const Home = () => {
+  const [searchParams] = useSearchParams();
+  
+  const successMessage = searchParams.get('success');
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+    }
+  }, []); // This will run whenever the successMessage changes
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -23,7 +39,8 @@ const Home = () => {
   };
 
   const cardClasses = {
-    wrapper: "w-1/4",
+    moreInfo: "lg:w-1/4",
+    wrapper: "min-w-full lg:min-w-0 lg:w-1/4",
     card: "border border-gray-200 rounded-lg overflow-hidden shadow-lg h-[280px] flex flex-col",
     imageContainer: "relative h-48",
     image: "w-full h-full object-cover",
@@ -32,7 +49,7 @@ const Home = () => {
     titleContainer: "bg-[#114232] text-white p-3 flex-grow flex items-center",
     title: "text-lg font-medium line-clamp-2",
     button:
-      "border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition duration-300 ease-in-out",
+      "my-auto lg:my-13 border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition duration-300 ease-in-out",
   };
 
   return (
@@ -56,23 +73,23 @@ const Home = () => {
 
       {/* About Section */}
       <section className="p-8 bg-[#114232] text-white">
-        <div className="flex items-center space-x-8 max-w-6xl mx-auto">
-          <div className="w-1/2 flex justify-center">
+        <div className="flex items-center flex-col lg:flex-row space-x-8 lg:max-w-6xl mx-auto gap-10">
+          <div className="lg:w-1/2 flex justify-center">
             <img
               src={UsImage}
               alt="Farmer in a field"
-              className="rounded-full w-3/4 max-w-[350px] min-w-[200px] object-cover"
+              className="rounded-full w-3/4 lg:max-w-[350px] min-w-[200px] object-cover"
             />
           </div>
-          <div className="w-1/2">
-            <h2 className="text-3xl font-bold mb-4">Tentang Kami</h2>
-            <p className="text-lg leading-relaxed mb-6">
+          <div className="lg:w-1/2">
+            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">Tentang Kami</h2>
+            <p className="text-lg leading-relaxed mb-6 text-center lg:text-left">
               Petani GO adalah platform yang menyediakan informasi dan solusi
               untuk para petani. Kami berkomitmen untuk membantu petani
               meningkatkan hasil panen dan kesejahteraan mereka.
             </p>
-            <h2 className="text-3xl font-bold mb-4">Fokus Kami</h2>
-            <p className="text-lg leading-relaxed">
+            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">Fokus Kami</h2>
+            <p className="text-lg leading-relaxed text-center lg:text-left">
               Kami fokus pada penyediaan informasi yang akurat dan solusi
               praktis untuk masalah pertanian. Kami juga menyediakan forum
               online untuk diskusi dan berbagi pengalaman antar petani.
@@ -87,9 +104,9 @@ const Home = () => {
           <h2 className="text-2xl font-bold mb-8">INFO DAN WAWASAN</h2>
 
           {/* Artikel Row */}
-          <div className="flex gap-8 mb-8">
-            <div className={cardClasses.wrapper}>
-              <div className="h-[280px] flex items-end pb-8">
+          <div className="flex gap-8 mb-8 overflow-scroll lg:overflow-hidden">
+            <div className={cardClasses.moreInfo}>
+              <div className="h-[280px] flex items-end my-auto lg:pb-8">
                 <Link
                   to="/articles/knowledge"
                   onClick={scrollToTop}
@@ -172,8 +189,8 @@ const Home = () => {
           </div>
 
           {/* Berita Row */}
-          <div className="flex gap-8">
-            <div className={cardClasses.wrapper}>
+          <div className="flex gap-8 overflow-scroll lg:overflow-hidden">
+            <div className={cardClasses.moreInfo}>
               <div className="h-[280px] flex items-end pb-8">
                 <Link
                   to="/news"
@@ -274,15 +291,15 @@ const Home = () => {
       >
         <div className="max-w-6xl mx-auto">
           {/* Header dan Deskripsi */}
-          <div className="grid grid-cols-12 mb-8">
-            <div className="col-span-3">
-              <h2 className="text-2xl font-bold mb-4 text-[#114232]">Modul</h2>
-              <p className="text-lg leading-relaxed text-[#114232]">
+          <div className="grid grid-cols-12 mb-8 gap-5">
+            <div className="col-span-12 lg:col-span-3">
+              <h2 className="text-2xl font-bold mb-4 text-[#114232] text-center lg:text-left">Modul</h2>
+              <p className="text-lg leading-relaxed text-[#114232] text-center lg:text-left">
                 Bagaimana kita belajar untuk budidaya pertanian?
               </p>
             </div>
-            <div className="col-span-6 col-start-6 ml-28">
-              <p className="text-lg leading-relaxed text-[#114232]">
+            <div className="col-span-12 lg:col-span-6 lg:col-start-7">
+              <p className="text-lg leading-relaxed text-[#114232] text-center lg:text-left">
                 Berfokus pada keberlanjutan, kami memiliki tiga fokus utama
                 untuk meningkatkan produktivitas petani kecil: pembangunan
                 ekonomi, pertanian regeneratif, dan ketahanan iklim.
@@ -291,11 +308,11 @@ const Home = () => {
           </div>
 
           {/* Card Modul */}
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8">
             <Link
               to="/modules/edukasi-buku"
               onClick={scrollToTop}
-              className="bg-[#114232] h-80 rounded-lg relative overflow-hidden transform transition-transform hover:scale-105 hover:bg-opacity-80 duration-300 ease-in-out"
+              className="bg-[#114232] lg:h-80 rounded-lg relative overflow-hidden transform transition-transform hover:scale-105 hover:bg-opacity-80 duration-300 ease-in-out"
             >
               <div className="absolute right-0 bottom-0">
                 <img
@@ -318,7 +335,7 @@ const Home = () => {
             <Link
               to="/modules/edukasi-video"
               onClick={scrollToTop}
-              className="bg-[#114232] h-80 rounded-lg relative overflow-hidden transform transition-transform hover:scale-105 hover:bg-opacity-80 duration-300 ease-in-out"
+              className="bg-[#114232] lg:h-80 rounded-lg relative overflow-hidden transform transition-transform hover:scale-105 hover:bg-opacity-80 duration-300 ease-in-out"
             >
               <div className="absolute right-0 bottom-0">
                 <img

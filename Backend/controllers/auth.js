@@ -2,8 +2,18 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { query } from '../database/db.js'; 
 import dotenv from 'dotenv';
+import { OAuth2Client } from 'google-auth-library';
 
 dotenv.config();
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+async function verifyGoogleToken(idToken) {
+  const ticket = await client.verifyIdToken ({
+    idToken,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+  const payload = ticket.getPayload();
+  return payload;
+}
 
 const signup = async (req, res) => {
     const { username, email, password } = req.body;
@@ -78,4 +88,47 @@ const signup = async (req, res) => {
     }
   }
 
-  export {signup, login}
+  const googleAuth=  async(req, res) => {
+    const {token} = req.body;
+    if (!token) {
+      return res.status(400).json ({message: 'Token dibutuhkan'});
+    }
+    try {
+      const userInfo = await verifyGoogleToken(token);
+      const checkUserQuery = "SELECT * FROM users where email=?";
+      const checkUserResults = await query(checkUserQuery, [userInfo.email]);
+      let user;
+      if (checkUserResults.length > 0) {
+        user =  checkUserResults[0];
+      } else {
+        const insertQuery = "INSERT INTO users (username, email, picture, password) VALUES (?, ?, ?, ?)"
+        const insertResult = await query(insertQuery, [userInfo.name, userInfo.email, userInfo.picture, null]);
+        user = {
+          id: insertResult.insertId,
+          username: userInfo.name,
+          email: userInfo.email,
+          picture: userInfo.picture,
+        }; 
+      }
+      const jwtToken = jwt.sign(
+        {userId : user.id,
+        username : user.username,
+        email : user.email
+         },
+         process.env.JWT_SECRET,
+         {expiresIn : "1h"}
+      );
+      res.json({
+        token : jwtToken,
+        userId : user.id,
+        username : user.username,
+        email : user.email,
+        picture : user.picture
+      })
+    } catch (error) {
+      console.error("Google OAuth ERROR!", error);
+      res.status(500).json ({message : 'Autentikasi ke Google GAGAL!'})
+    }
+  }
+
+  export {signup, login, googleAuth}
