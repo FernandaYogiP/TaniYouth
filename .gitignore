@@ -1,6 +1,6 @@
 # Environment Variables
-.env
-Backend/.env
+# .env
+# Backend/.env
 .env.local
 .env.development
 .env.test
