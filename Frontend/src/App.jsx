@@ -17,9 +17,10 @@ import Video from './Pages/Module/Video';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import DetailNews from './Pages/DetailNews';
-import { ToastContainer } from 'react-toastify';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import { ToastContainer } from 'react-toastify';
+import DiseaseDetection from './Pages/DiseaseDetection';
+import Profile from './Pages/Profile';
 
 // Wrapper component untuk mengecek path
 function AppContent() {
@@ -46,9 +47,12 @@ function AppContent() {
                 <Route path="/articles/cultivation/:id" element={<DetailCultivation />} />
                 <Route path="/modules/edukasi-buku" element={<Book />} />
                 <Route path="/modules/edukasi-video" element={<Video />} />
+                <Route path="/disease-detection" element={<DiseaseDetection />} />
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
                 <Route path="/Pages/DetailNews" element={<DetailNews />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/detection" element={<DiseaseDetection />} />
             </Routes>
 
             {showHeaderFooter && <Footer />}
@@ -64,7 +68,6 @@ const App = () => {
             <AppContent />
         </Router>
         </GoogleOAuthProvider>
-
     );
 };
 

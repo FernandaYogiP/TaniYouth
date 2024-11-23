@@ -39,57 +39,56 @@ const Home = () => {
   };
 
   const cardClasses = {
-    moreInfo: "lg:w-1/4",
-    wrapper: "min-w-full lg:min-w-0 lg:w-1/4",
+    wrapper: "w-1/4",
     card: "border border-gray-200 rounded-lg overflow-hidden shadow-lg h-[280px] flex flex-col",
     imageContainer: "relative h-48",
     image: "w-full h-full object-cover",
     watermarkContainer: "absolute bottom-0 left-0 w-full",
-    watermark: "w-full h-full object-cover grayscale",
-    titleContainer: "bg-[#114232] text-white p-3 flex-grow flex items-center",
+    watermark: "w-full h-full object-cover grayscale opacity-80 hover:opacity-100 transition-opacity duration-300",
+    titleContainer: "bg-[#114232] text-white p-3 flex-grow flex items-center hover:bg-[#326B59] transition-colors duration-300 ease-in-out",
     title: "text-lg font-medium line-clamp-2",
     button:
-      "my-auto lg:my-13 border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition duration-300 ease-in-out",
+      "border border-[#114232] text-[#114232] flex items-center px-6 py-3 rounded hover:bg-[#114232] hover:text-white transition duration-300 ease-in-out",
   };
 
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative w-full h-[500px] overflow-hidden">
+      <section className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
         <img
           src={HomeImage}
           alt="Hands holding a small plant"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-center animate-kenburns"
         />
-        <div className="absolute top-1/3 right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm">
-          <h1 className="text-white">
-            <span className="text-2xl font-normal">Sebuah tempat</span> <br />
-            <span className="text-4xl font-bold">Informasi & Solusi</span>{" "}
+        <div className="absolute top-1/3 left-4 right-4 md:left-auto md:right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm transform transition-all duration-700 hover:scale-105">
+          <h1 className="text-white text-center md:text-left">
+            <span className="text-xl md:text-2xl font-normal">Sebuah tempat</span> <br />
+            <span className="text-3xl md:text-4xl font-bold">Informasi & Solusi</span>{" "}
             <br />
-            <span className="text-4xl font-bold">Pertanian</span>
+            <span className="text-3xl md:text-4xl font-bold">Pertanian</span>
           </h1>
         </div>
       </section>
 
       {/* About Section */}
       <section className="p-8 bg-[#114232] text-white">
-        <div className="flex items-center flex-col lg:flex-row space-x-8 lg:max-w-6xl mx-auto gap-10">
-          <div className="lg:w-1/2 flex justify-center">
+        <div className="flex items-center space-x-8 max-w-6xl mx-auto">
+          <div className="w-1/2 flex justify-center">
             <img
               src={UsImage}
               alt="Farmer in a field"
               className="rounded-full w-3/4 lg:max-w-[350px] min-w-[200px] object-cover"
             />
           </div>
-          <div className="lg:w-1/2">
-            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">Tentang Kami</h2>
-            <p className="text-lg leading-relaxed mb-6 text-center lg:text-left">
+          <div className="w-1/2">
+            <h2 className="text-3xl font-bold mb-4">Tentang Kami</h2>
+            <p className="text-lg leading-relaxed mb-6">
               Petani GO adalah platform yang menyediakan informasi dan solusi
               untuk para petani. Kami berkomitmen untuk membantu petani
               meningkatkan hasil panen dan kesejahteraan mereka.
             </p>
-            <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">Fokus Kami</h2>
-            <p className="text-lg leading-relaxed text-center lg:text-left">
+            <h2 className="text-3xl font-bold mb-4">Fokus Kami</h2>
+            <p className="text-lg leading-relaxed">
               Kami fokus pada penyediaan informasi yang akurat dan solusi
               praktis untuk masalah pertanian. Kami juga menyediakan forum
               online untuk diskusi dan berbagi pengalaman antar petani.
@@ -104,20 +103,20 @@ const Home = () => {
           <h2 className="text-2xl font-bold mb-8">INFO DAN WAWASAN</h2>
 
           {/* Artikel Row */}
-          <div className="flex gap-8 mb-8 overflow-scroll lg:overflow-hidden">
-            <div className={cardClasses.moreInfo}>
-              <div className="h-[280px] flex items-end my-auto lg:pb-8">
+          <div className="flex gap-8 mb-8">
+            <div className={cardClasses.wrapper}>
+              <div className="h-[280px] flex items-end pb-8">
                 <Link
                   to="/articles/knowledge"
                   onClick={scrollToTop}
-                  className={cardClasses.button}
+                  className={`${cardClasses.button} w-full`}
                 >
                   Artikel Selengkapnya →
                 </Link>
               </div>
             </div>
-            {/* Card 1 */}
-            <div className={cardClasses.wrapper}>
+
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -138,8 +137,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* Card 2 */}
-            <div className={cardClasses.wrapper}>
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -162,8 +162,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* Card 3 */}
-            <div className={cardClasses.wrapper}>
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -189,20 +190,20 @@ const Home = () => {
           </div>
 
           {/* Berita Row */}
-          <div className="flex gap-8 overflow-scroll lg:overflow-hidden">
-            <div className={cardClasses.moreInfo}>
+          <div className="flex gap-8">
+            <div className={cardClasses.wrapper}>
               <div className="h-[280px] flex items-end pb-8">
                 <Link
                   to="/news"
                   onClick={scrollToTop}
-                  className={cardClasses.button}
+                  className={`${cardClasses.button} w-full`}
                 >
                   Berita Selengkapnya →
                 </Link>
               </div>
             </div>
-            {/* News Card 1 */}
-            <div className={cardClasses.wrapper}>
+
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -226,8 +227,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* News Card 2 */}
-            <div className={cardClasses.wrapper}>
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -251,8 +253,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* News Card 3 */}
-            <div className={cardClasses.wrapper}>
+            <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
                   <img
@@ -291,15 +294,15 @@ const Home = () => {
       >
         <div className="max-w-6xl mx-auto">
           {/* Header dan Deskripsi */}
-          <div className="grid grid-cols-12 mb-8 gap-5">
-            <div className="col-span-12 lg:col-span-3">
-              <h2 className="text-2xl font-bold mb-4 text-[#114232] text-center lg:text-left">Modul</h2>
-              <p className="text-lg leading-relaxed text-[#114232] text-center lg:text-left">
+          <div className="grid grid-cols-12 mb-8">
+            <div className="col-span-3">
+              <h2 className="text-2xl font-bold mb-4 text-[#114232]">Modul</h2>
+              <p className="text-lg leading-relaxed text-[#114232]">
                 Bagaimana kita belajar untuk budidaya pertanian?
               </p>
             </div>
-            <div className="col-span-12 lg:col-span-6 lg:col-start-7">
-              <p className="text-lg leading-relaxed text-[#114232] text-center lg:text-left">
+            <div className="col-span-6 col-start-6 ml-28">
+              <p className="text-lg leading-relaxed text-[#114232]">
                 Berfokus pada keberlanjutan, kami memiliki tiga fokus utama
                 untuk meningkatkan produktivitas petani kecil: pembangunan
                 ekonomi, pertanian regeneratif, dan ketahanan iklim.
@@ -308,7 +311,7 @@ const Home = () => {
           </div>
 
           {/* Card Modul */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-8">
             <Link
               to="/modules/edukasi-buku"
               onClick={scrollToTop}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine, RiSendPlane2Line } from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Forum = () => {
@@ -127,21 +127,34 @@ const Forum = () => {
                 <h1 className="text-3xl font-bold">FORUM DISKUSI</h1>
             </div>
 
-            <div className="p-8">
-                {/* Search input */}
-                <div className="flex justify-end mb-8">
-                    <div className="relative w-64">
+            <div className="p-4 sm:p-8">
+                {/* Search and Send Message Section */}
+                <div className="flex justify-between items-center mb-8 gap-4">
+                    {/* Send Message Field */}
+                    <div className="flex items-stretch w-[280px]">
+                        <input 
+                            type="text" 
+                            placeholder="Kirim Pesan" 
+                            className="border border-[#114232] p-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-[#114232] focus:border-transparent transition-all duration-300" 
+                        />
+                        <button className="bg-[#114232] px-3 rounded-r-md hover:bg-[#1a5c45] transition-colors duration-300 flex items-center">
+                            <RiSendPlane2Line size={16} className="text-white" />
+                        </button>
+                    </div>
+
+                    {/* Search input */}
+                    <div className="relative w-[280px]">
                         <input
                             type="text"
                             placeholder="Cari diskusi..."
                             value={searchTerm}
                             onChange={handleSearch}
                             onKeyPress={handleKeyPress}
-                            className="border border-[#114232] p-2 rounded-l-md rounded-r-md w-full pr-10"
+                            className="border border-[#114232] p-2 rounded-l-md rounded-r-md w-full pr-10 focus:outline-none focus:ring-2 focus:ring-[#114232] focus:border-transparent transition-all duration-300"
                         />
                         <button 
                             onClick={handleSearchClick}
-                            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#114232] text-white px-3 p-2 rounded-l-full hover:bg-[#1a5c45] transition-colors"
+                            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#114232] text-white px-3 p-2 rounded-l-full hover:bg-[#1a5c45] transition-all duration-300 hover:shadow-lg"
                         >
                             <RiSearchLine size={16} />
                         </button>
@@ -149,53 +162,84 @@ const Forum = () => {
                 </div>
 
                 {/* Table */}
-                <div className="overflow-hidden rounded-lg border border-gray-200 shadow mb-8">
-                    <table className="min-w-full bg-white border-collapse">
-                        <thead>
-                            <tr className="bg-[#114232] text-white">
-                                <th className="py-4 px-6 text-left">Pengirim</th>
-                                <th className="py-4 px-6 text-left">Pendapat</th>
-                                <th className="py-4 px-6 text-left">Waktu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-lg mb-8">
+                    <div className="min-w-full bg-white">
+                        {/* Desktop View */}
+                        <div className="hidden md:block">
+                            <table className="min-w-full border-collapse">
+                                <thead>
+                                    <tr className="bg-[#114232] text-white">
+                                        <th className="py-4 px-6 text-left">Pengirim</th>
+                                        <th className="py-4 px-6 text-left">Pendapat</th>
+                                        <th className="py-4 px-6 text-left">Waktu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentDiscussions.map((discussion, index) => (
+                                        <tr 
+                                            key={discussion.id} 
+                                            className={`${
+                                                index % 2 === 0 ? 'bg-[#326B59]/90' : 'bg-[#114232]/90'
+                                            } text-white hover:bg-[#114232] transition-all duration-300`}
+                                        >
+                                            <td className="py-4 px-6">
+                                                <div className="flex items-center gap-2">
+                                                    <FaUserCircle className="text-white" size={20} />
+                                                    <a 
+                                                        href={`mailto:${discussion.sender}`} 
+                                                        className="text-white hover:underline transition-all duration-300"
+                                                    >
+                                                        {discussion.sender}
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-6">{discussion.opinion}</td>
+                                            <td className="py-4 px-6">{discussion.time}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Mobile View */}
+                        <div className="md:hidden">
                             {currentDiscussions.map((discussion, index) => (
-                                <tr 
-                                    key={discussion.id} 
-                                    className={`${
+                                <div 
+                                    key={discussion.id}
+                                    className={`p-4 ${
                                         index % 2 === 0 ? 'bg-[#326B59]/90' : 'bg-[#114232]/90'
-                                    } text-white hover:bg-[#114232] transition-colors`}
+                                    } text-white border-b border-gray-200 last:border-b-0`}
                                 >
-                                    <td className="py-4 px-6">
-                                        <div className="flex items-center gap-2">
-                                            <FaUserCircle className="text-white" size={20} />
-                                            <a 
-                                                href={`mailto:${discussion.sender}`} 
-                                                className="text-white hover:underline"
-                                            >
-                                                {discussion.sender}
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td className="py-4 px-6">{discussion.opinion}</td>
-                                    <td className="py-4 px-6">{discussion.time}</td>
-                                </tr>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <FaUserCircle className="text-white" size={20} />
+                                        <a 
+                                            href={`mailto:${discussion.sender}`}
+                                            className="text-white hover:underline transition-all duration-300"
+                                        >
+                                            {discussion.sender}
+                                        </a>
+                                    </div>
+                                    <div className="mb-2">{discussion.opinion}</div>
+                                    <div className="text-sm opacity-80">{discussion.time}</div>
+                                </div>
                             ))}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
 
                 {/* No results message */}
                 {isSearched && currentDiscussions.length === 0 && (
-                    <div className="text-center text-gray-500 mt-8">
+                    <div className="text-center text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
                         Tidak ada hasil yang ditemukan
                     </div>
                 )}
 
                 {/* Pagination */}
-                <div className="flex justify-center mt-8">
+                <div className="flex justify-center mt-8 flex-wrap gap-2">
                     <button 
-                        className={`mx-2 ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:text-[#1a5c45]'}`}
+                        className={`mx-2 p-2 rounded-full hover:bg-[#114232] hover:text-white transition-all duration-300 ${
+                            currentPage === 1 ? 'text-gray-400 cursor-not-allowed hover:bg-transparent hover:text-gray-400' : ''
+                        }`}
                         onClick={() => paginate(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
@@ -206,10 +250,10 @@ const Forum = () => {
                         <button
                             key={number}
                             onClick={() => paginate(number)}
-                            className={`mx-2 px-3 py-1 rounded-md ${
+                            className={`mx-1 px-3 py-1 rounded-md transition-all duration-300 ${
                                 currentPage === number 
-                                    ? 'bg-[#114232] text-white' 
-                                    : 'hover:bg-[#114232] hover:text-white transition-colors'
+                                    ? 'bg-[#114232] text-white shadow-lg' 
+                                    : 'hover:bg-[#114232] hover:text-white hover:shadow-lg'
                             }`}
                         >
                             {number}
@@ -217,7 +261,9 @@ const Forum = () => {
                     ))}
                     
                     <button 
-                        className={`mx-2 ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'hover:text-[#1a5c45]'}`}
+                        className={`mx-2 p-2 rounded-full hover:bg-[#114232] hover:text-white transition-all duration-300 ${
+                            currentPage === totalPages ? 'text-gray-400 cursor-not-allowed hover:bg-transparent hover:text-gray-400' : ''
+                        }`}
                         onClick={() => paginate(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >

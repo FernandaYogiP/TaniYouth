@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine, RiPlayCircleFill } from 'react-icons/ri';
+import { RiArrowLeftSLine, RiArrowRightSLine, RiPlayCircleFill } from 'react-icons/ri';
+import { FaSearch } from 'react-icons/fa';
 import { VideoImage1, VideoImage2, VideoImage3 } from '../../assets/image';
 import { useState } from 'react';
 
@@ -116,46 +117,46 @@ const Video = () => {
             <div className="bg-[#114232] text-white text-center py-4 mb-8">
                 <h1 className="text-3xl font-bold">EDUKASI VIDEO</h1>
             </div>
-            <div className="p-8">
+            <div className="p-4 sm:p-8">
                 <div className="flex justify-end mb-8">
-                    <div className="relative w-64">
+                    <div className="relative w-full max-w-xs">
                         <input
                             type="text"
                             placeholder="Cari..."
                             value={searchTerm}
                             onChange={handleSearch}
                             onKeyPress={handleKeyPress}
-                            className="border border-[#114232] p-2 rounded-l-md rounded-r-md w-full pr-10"
+                            className="border border-[#114232] p-2 rounded-l-md rounded-r-md w-full pr-10 focus:outline-none focus:ring-2 focus:ring-[#114232] focus:border-transparent transition-all duration-300"
                         />
                         <button 
                             onClick={handleSearchClick}
-                            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#114232] text-white px-3 p-2 rounded-l-full hover:bg-[#1a5c45] transition-colors"
+                            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#114232] text-white px-3 p-2 rounded-l-full hover:bg-[#1a5c45] transition-all duration-300 hover:shadow-lg"
                         >
-                            <RiSearchLine size={16} />
+                            <FaSearch />
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                     {currentVideos.map((video) => (
-                        <div key={video.id} className="flex flex-col">
-                            <div className="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
-                                <div className="relative">
+                        <div key={video.id} className="flex flex-col group">
+                            <div className="border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                <div className="relative overflow-hidden">
                                     <img 
                                         src={video.image} 
                                         alt={video.title} 
-                                        className="w-full h-[200px] object-cover rounded-t-lg" 
+                                        className="w-full h-[180px] sm:h-[200px] lg:h-[220px] object-cover transition-transform duration-500 group-hover:scale-110" 
                                     />
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <RiPlayCircleFill className="text-white text-5xl opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
+                                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                        <RiPlayCircleFill className="text-white text-5xl sm:text-6xl opacity-80 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110 cursor-pointer" />
                                     </div>
                                 </div>
-                                <div className="bg-[#114232] text-white p-3 min-h-[80px] flex items-center justify-center">
+                                <div className="bg-[#114232] text-white p-3 min-h-[80px] flex items-center justify-center transition-colors duration-300 hover:bg-[#326B59]">
                                     <h2 className="text-base font-medium text-center">{video.title}</h2>
                                 </div>
                             </div>
                             <Link 
                                 to="#"
-                                className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition w-fit self-start"
+                                className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition-all duration-300 hover:shadow-md transform hover:-translate-y-1 w-fit self-start"
                             >
                                 Lihat Video →
                             </Link>
@@ -163,14 +164,16 @@ const Video = () => {
                     ))}
                 </div>
                 {isSearched && currentVideos.length === 0 && (
-                    <div className="text-center text-gray-500 mt-8">
+                    <div className="text-center text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
                         Tidak ada hasil yang ditemukan
                     </div>
                 )}
                 
-                <div className="flex justify-center mt-8">
+                <div className="flex justify-center mt-8 flex-wrap gap-2">
                     <button 
-                        className={`mx-2 ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:text-[#1a5c45]'}`}
+                        className={`mx-2 p-2 rounded-full hover:bg-[#114232] hover:text-white transition-all duration-300 ${
+                            currentPage === 1 ? 'text-gray-400 cursor-not-allowed hover:bg-transparent hover:text-gray-400' : ''
+                        }`}
                         onClick={() => paginate(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
@@ -181,10 +184,10 @@ const Video = () => {
                         <button
                             key={number}
                             onClick={() => paginate(number)}
-                            className={`mx-2 px-3 py-1 rounded-md ${
+                            className={`mx-1 px-3 py-1 rounded-md transition-all duration-300 ${
                                 currentPage === number 
-                                    ? 'bg-[#114232] text-white' 
-                                    : 'hover:bg-[#114232] hover:text-white transition-colors'
+                                    ? 'bg-[#114232] text-white shadow-lg' 
+                                    : 'hover:bg-[#114232] hover:text-white hover:shadow-lg'
                             }`}
                         >
                             {number}
@@ -192,7 +195,9 @@ const Video = () => {
                     ))}
                     
                     <button 
-                        className={`mx-2 ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'hover:text-[#1a5c45]'}`}
+                        className={`mx-2 p-2 rounded-full hover:bg-[#114232] hover:text-white transition-all duration-300 ${
+                            currentPage === totalPages ? 'text-gray-400 cursor-not-allowed hover:bg-transparent hover:text-gray-400' : ''
+                        }`}
                         onClick={() => paginate(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
