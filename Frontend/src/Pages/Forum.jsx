@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine, RiSendPlane2Line } from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Forum = () => {
@@ -128,9 +128,22 @@ const Forum = () => {
             </div>
 
             <div className="p-4 sm:p-8">
-                {/* Search input */}
-                <div className="flex justify-end mb-8">
-                    <div className="relative w-full max-w-xs">
+                {/* Search and Send Message Section */}
+                <div className="flex justify-between items-center mb-8 gap-4">
+                    {/* Send Message Field */}
+                    <div className="flex items-stretch w-[280px]">
+                        <input 
+                            type="text" 
+                            placeholder="Kirim Pesan" 
+                            className="border border-[#114232] p-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-[#114232] focus:border-transparent transition-all duration-300" 
+                        />
+                        <button className="bg-[#114232] px-3 rounded-r-md hover:bg-[#1a5c45] transition-colors duration-300 flex items-center">
+                            <RiSendPlane2Line size={16} className="text-white" />
+                        </button>
+                    </div>
+
+                    {/* Search input */}
+                    <div className="relative w-[280px]">
                         <input
                             type="text"
                             placeholder="Cari diskusi..."

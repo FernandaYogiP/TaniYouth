@@ -7,10 +7,10 @@ const AboutUs = () => {
             <section className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
                 <img 
                     src={HomeImage} 
-                    alt="Hero Background" 
+                    alt="Hands holding a small plant" 
                     className="w-full h-full object-cover object-center animate-kenburns"
                 />
-                <div className="absolute top-1/3 right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm transform transition-all duration-700 hover:scale-105">
+                <div className="absolute top-1/3 left-4 right-4 md:left-auto md:right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm transform transition-all duration-700 hover:scale-105">
                     <h1 className="text-white text-center md:text-left">
                         <span className="text-xl md:text-2xl font-normal">Tentang Kami</span> <br />
                         <span className="text-3xl md:text-4xl font-bold">Profil Petani GO</span>
@@ -30,7 +30,7 @@ const AboutUs = () => {
                     </div>
                     <div className="w-full md:w-1/2">
                         <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center md:text-left">Tentang Kami</h2>
-                        <p className="text-base md:text-lg leading-relaxed text-center md:text-left">
+                        <p className="text-base md:text-lg leading-relaxed text-center md:text-left pb-8">
                             Platform edukasi yang berdedikasi untuk menciptakan
                             ruang belajar dan berbagi pengetahuan di dunia pertanian.
                             Melalui pendekatan yang modern dan interaktif, kami hadir

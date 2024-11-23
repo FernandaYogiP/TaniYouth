@@ -38,18 +38,18 @@ const Home = () => {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative h-[500px] overflow-hidden">
+      <section className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
         <img
           src={HomeImage}
           alt="Hands holding a small plant"
-          className="w-full h-full object-cover animate-kenburns"
+          className="w-full h-full object-center animate-kenburns"
         />
-        <div className="absolute top-1/3 right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm transform transition-all duration-700 hover:scale-105">
-          <h1 className="text-white">
-            <span className="text-2xl font-normal">Sebuah tempat</span> <br />
-            <span className="text-4xl font-bold">Informasi & Solusi</span>{" "}
+        <div className="absolute top-1/3 left-4 right-4 md:left-auto md:right-32 bg-[#1E1E1E] bg-opacity-50 p-8 rounded-lg backdrop-blur-sm transform transition-all duration-700 hover:scale-105">
+          <h1 className="text-white text-center md:text-left">
+            <span className="text-xl md:text-2xl font-normal">Sebuah tempat</span> <br />
+            <span className="text-3xl md:text-4xl font-bold">Informasi & Solusi</span>{" "}
             <br />
-            <span className="text-4xl font-bold">Pertanian</span>
+            <span className="text-3xl md:text-4xl font-bold">Pertanian</span>
           </h1>
         </div>
       </section>
@@ -147,6 +147,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* Card 3 */}
             <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
@@ -187,6 +188,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
+
             <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
                 <div className={cardClasses.imageContainer}>
@@ -237,6 +239,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
             {/* News Card 3 */}
             <div className={`${cardClasses.wrapper} w-full md:w-1/4`}>
               <div className={cardClasses.card}>
