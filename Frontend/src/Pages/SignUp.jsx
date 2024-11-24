@@ -22,10 +22,10 @@ const SignUp = () => {
     setLoading(true);
     setError("");
     try {
-      const respon = await axios.post("http://localhost:3000/signup", 
+      const response = await axios.post("http://localhost:3000/signup", 
       {username, email, password}
       );
-      localStorage.setItem("token", respon.data.token);
+      localStorage.setItem("token", response.data.token);
       toast.success("Akun berhasil dibuat", {
         position: 'top-center',
         autoClose: 5000,

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { FaUser, FaCamera, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Profile = () => {
     const [profileData, setProfileData] = useState({
-        name: 'Who Am I',
-        phoneNumber: '081234567890',
-        password: 'siapaaku',
-        profileImage: localStorage.getItem('profileImage') || null
+        username: '',
+        email: '',
+        phone_number: '',
+        profile_image: ''
     });
     const [isNameModalOpen, setIsNameModalOpen] = useState(false);
     const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
-    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [newName, setNewName] = useState('');
     const [newPhone, setNewPhone] = useState('');
     const [passwordData, setPasswordData] = useState({
@@ -20,119 +20,158 @@ const Profile = () => {
         newPassword: '',
         confirmPassword: ''
     });
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true); 
     const navigate = useNavigate();
 
+
     useEffect(() => {
-        const savedImage = localStorage.getItem('profileImage');
-        if (savedImage) {
-            setProfileData(prev => ({ ...prev, profileImage: savedImage }));
-        }
+        axios.get('http://localhost:3000/profile', {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        })
+        .then(response => {
+            setProfileData(response.data.user);
+            setLoading(false); 
+        })
+        .catch(err => {
+            toast.error('Error fetching profile');
+            console.error(err);
+            setLoading(false); 
+        });
     }, []);
 
+ 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                toast.error('Ukuran gambar terlalu besar. Maksimal 5MB');
-                return;
-            }
+            const formData = new FormData();
+            formData.append('profileImage', file);
 
-            if (!file.type.startsWith('image/')) {
-                toast.error('File harus berupa gambar');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const imageData = reader.result;
-                localStorage.setItem('profileImage', imageData);
-                setProfileData(prev => ({ ...prev, profileImage: imageData }));
-                toast.success('Foto profil berhasil diperbarui');
-            };
-            reader.readAsDataURL(file);
+            axios.put('http://localhost:3000/uploads/profile/image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
+            .then((response) => {
+                setProfileData((prev) => ({
+                    ...prev,
+                    profile_image: response.data.profileImage,  // Update profile image state with new path
+                }));
+                toast.success('Profile image updated successfully');
+            })
+            .catch((err) => {
+                toast.error('Failed to upload image');
+                console.error(err);
+            });
         }
     };
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        toast.success('Berhasil logout');
-        navigate('/Pages/Login');
-    };
-
-    // Name change handlers
-    const handleChangeName = () => {
-        setNewName(profileData.name);
-        setIsNameModalOpen(true);
-    };
+    
 
     const handleNameSubmit = (e) => {
         e.preventDefault();
         if (newName.trim()) {
-            setProfileData(prev => ({
-                ...prev,
-                name: newName.trim()
-            }));
-            setIsNameModalOpen(false);
-            toast.success('Nama berhasil diubah');
+            axios.put('http://localhost:3000/profile/name', { name: newName.trim() }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then(() => {
+                setProfileData(prev => ({ ...prev, name: newName.trim() }));
+                setIsNameModalOpen(false);
+                toast.success('Name updated successfully');
+            })
+            .catch(err => {
+                toast.error('Failed to update name');
+                console.error(err);
+            });
         }
-    };
-
-    // Phone number handlers
-    const handleAddPhone = () => {
-        setNewPhone(profileData.phoneNumber !== '-' ? profileData.phoneNumber : '');
-        setIsPhoneModalOpen(true);
     };
 
     const handlePhoneSubmit = (e) => {
         e.preventDefault();
         if (newPhone.trim()) {
-            setProfileData(prev => ({
-                ...prev,
-                phoneNumber: newPhone.trim()
-            }));
-            setIsPhoneModalOpen(false);
-            toast.success('Nomor telepon berhasil ditambahkan');
+            axios.post('http://localhost:3000/profile/phone', { phoneNumber: newPhone.trim() }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then(() => {
+                setProfileData(prev => ({ ...prev, phoneNumber: newPhone.trim() }));
+                setNewPhone(''); 
+                toast.success('Phone number added successfully');
+            })
+            .catch(err => {
+                toast.error('Failed to update phone number');
+                console.error(err);
+            });
         }
     };
 
-    // Password change handlers
-    const handleChangePassword = () => {
-        setPasswordData({
-            currentPassword: '',
-            newPassword: '',
-            confirmPassword: ''
-        });
-        setIsPasswordModalOpen(true);
-    };
-
-    const handlePasswordSubmit = (e) => {
+    const handlePasswordChange = (e) => {
         e.preventDefault();
-        if (passwordData.currentPassword === profileData.password) {
-            if (passwordData.newPassword === passwordData.confirmPassword) {
-                setProfileData(prev => ({
-                    ...prev,
-                    password: passwordData.newPassword
-                }));
-                setIsPasswordModalOpen(false);
-                toast.success('Password berhasil diubah');
-            } else {
-                toast.error('Password baru tidak cocok');
-            }
-        } else {
-            toast.error('Password saat ini salah');
+        const { currentPassword, newPassword, confirmPassword } = passwordData;
+    
+        // Validate the form
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            toast.error('All fields are required');
+            return;
         }
+    
+        if (newPassword !== confirmPassword) {
+            toast.error('New password and confirm password do not match');
+            return;
+        }
+    
+        setLoading(true); // Set loading state to true
+    
+        axios.put('http://localhost:3000/profile/password', { currentPassword, newPassword }, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        .then(() => {
+            toast.success('Password updated successfully');
+            setIsPasswordModalOpen(false);  // Close the modal
+            setPasswordData({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            });  // Reset the password form
+        })
+        .catch(err => {
+            toast.error('Failed to update password');
+            console.error(err);
+        })
+        .finally(() => {
+            setLoading(false); // Reset loading state
+        });
     };
+    
+
+  
+    const handleLogout = () => {
+        localStorage.removeItem('token');  
+        navigate('/Pages/Login');  
+        toast.success('You have been logged out');
+    };
+
+
+    if (loading) {
+        return (
+            <div className="text-center py-10">
+                <p className="text-xl font-semibold">Loading profile...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Title Block */}
+           
             <div className="w-full bg-[#114232] py-6">
                 <h1 className="text-white text-3xl font-bold text-center">PROFIL</h1>
             </div>
 
             <div className="py-8">
                 <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-                    {/* Profile Header */}
                     <div className="bg-[#114232] p-6 relative">
                         <div className="flex justify-between items-center">
                             <h1 className="text-2xl font-bold text-white">Profil Saya</h1>
@@ -145,13 +184,11 @@ const Profile = () => {
                             </button>
                         </div>
                     </div>
-
-                    {/* Profile Picture Section */}
                     <div className="relative w-32 h-32 mx-auto -mt-16 mb-4">
                         <div className="w-full h-full rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-200">
-                            {profileData.profileImage ? (
+                            {profileData.profile_image ? (
                                 <img 
-                                    src={profileData.profileImage} 
+                                    src={`http://localhost:3000/${profileData.profile_image}`} 
                                     alt="Profile" 
                                     className="w-full h-full object-cover"
                                 />
@@ -171,40 +208,45 @@ const Profile = () => {
                             />
                         </label>
                     </div>
-
-                    {/* Profile Info */}
                     <div className="p-6">
                         <div className="space-y-4">
                             <div className="border-b pb-4">
                                 <h2 className="text-sm text-[#114232] font-medium">Username</h2>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg font-medium text-[#114232]">{profileData.name}</p>
+                                    <p className="text-lg font-medium text-[#114232]">{profileData.username}</p>
                                     <button
-                                        onClick={handleChangeName}
+                                        onClick={() => setIsNameModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
                                     >
                                         Ubah
                                     </button>
                                 </div>
                             </div>
+
                             <div className="border-b pb-4">
-                                <h2 className="text-sm text-[#114232] font-medium">Nomor Handphone</h2>
+                                <h2 className="text-sm text-[#114232] font-medium">Nomor Telepon</h2>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg font-medium text-[#114232]">{profileData.phoneNumber}</p>
+                                    <p className="text-lg font-medium text-[#114232]">{profileData.phone_number}</p>
                                     <button
-                                        onClick={handleAddPhone}
+                                        onClick={() => setIsPhoneModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
                                     >
-                                        {profileData.phoneNumber === '-' ? 'Tambah' : 'Ubah'}
+                                        Ubah
                                     </button>
                                 </div>
                             </div>
+
+                            <div className="border-b pb-4">
+                                <h2 className="text-sm text-[#114232] font-medium">Email</h2>
+                                <p className="text-lg text-[#114232]">{profileData.email}</p>
+                            </div>
+
                             <div className="border-b pb-4">
                                 <h2 className="text-sm text-[#114232] font-medium">Password</h2>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg font-medium text-[#114232]">********</p>
+                                    <p className="text-lg font-medium text-[#114232]">**********</p>
                                     <button
-                                        onClick={handleChangePassword}
+                                        onClick={() => setIsPasswordModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
                                     >
                                         Ubah
@@ -216,24 +258,26 @@ const Profile = () => {
                 </div>
             </div>
 
-            {/* Name Change Modal */}
             {isNameModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Nama</h2>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-96">
+                        <h2 className="text-xl font-semibold mb-4">Ubah Username</h2>
                         <form onSubmit={handleNameSubmit}>
-                            <input
-                                type="text"
-                                value={newName}
-                                onChange={(e) => setNewName(e.target.value)}
-                                placeholder="Masukkan nama baru"
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                            />
-                            <div className="flex justify-end gap-2">
+                            <div className="mb-4">
+                                <label htmlFor="newName" className="block text-sm text-[#114232]">Nama Baru</label>
+                                <input
+                                    type="text"
+                                    id="newName"
+                                    value={newName}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    className="w-full p-2 mt-2 border rounded-lg text-black"
+                                />
+                            </div>
+                            <div className="flex justify-between">
                                 <button
                                     type="button"
                                     onClick={() => setIsNameModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
                                 >
                                     Batal
                                 </button>
@@ -248,27 +292,26 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-
-            {/* Phone Number Modal */}
             {isPhoneModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">
-                            {profileData.phoneNumber === '-' ? 'Tambah Nomor' : 'Ubah Nomor'}
-                        </h2>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-96">
+                        <h2 className="text-xl font-semibold mb-4">Tambah Nomor Telepon</h2>
                         <form onSubmit={handlePhoneSubmit}>
-                            <input
-                                type="tel"
-                                value={newPhone}
-                                onChange={(e) => setNewPhone(e.target.value)}
-                                placeholder="Masukkan nomor handphone"
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                            />
-                            <div className="flex justify-end gap-2">
+                            <div className="mb-4">
+                                <label htmlFor="newPhone" className="block text-sm text-[#114232]">Nomor Telepon Baru</label>
+                                <input
+                                    type="text"
+                                    id="newPhone"
+                                    value={newPhone}
+                                    onChange={(e) => setNewPhone(e.target.value)}
+                                    className="w-full p-2 mt-2 border rounded-lg text-black"
+                                />
+                            </div>
+                            <div className="flex justify-between">
                                 <button
                                     type="button"
                                     onClick={() => setIsPhoneModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
                                 >
                                     Batal
                                 </button>
@@ -283,71 +326,65 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-
-            {/* Password Change Modal */}
-            {isPasswordModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Password</h2>
-                        <form onSubmit={handlePasswordSubmit}>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="text-sm text-[#114232]">Password Saat Ini</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.currentPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            currentPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-sm text-[#114232]">Password Baru</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.newPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            newPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-sm text-[#114232]">Konfirmasi Password Baru</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.confirmPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            confirmPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex justify-end gap-2 mt-6">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsPasswordModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-[#326B59] text-white rounded-lg hover:bg-[#114232]"
-                                >
-                                    Simpan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+       
+       {isPasswordModalOpen && (
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white rounded-lg p-6 w-96">
+            <h2 className="text-xl font-semibold mb-4">Ubah Password</h2>
+            <form onSubmit={handlePasswordChange}>
+                <div className="mb-4">
+                    <label htmlFor="currentPassword" className="block text-sm text-[#114232]">Password Lama</label>
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        value={passwordData.currentPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
                 </div>
-            )}
+                <div className="mb-4">
+                    <label htmlFor="newPassword" className="block text-sm text-[#114232]">Password Baru</label>
+                    <input
+                        type="password"
+                        id="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="confirmPassword" className="block text-sm text-[#114232]">Konfirmasi Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
+                </div>
+                <div className="flex justify-between">
+                    <button
+                        type="button"
+                        onClick={() => setIsPasswordModalOpen(false)}
+                        className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
+                    >
+                        Batal
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-[#326B59] text-white rounded-lg hover:bg-[#114232] disabled:opacity-50"
+                        disabled={loading}  
+                    >
+                        {loading ? 'Loading...' : 'Simpan'}
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
+)}        </div>
     );
 };
 
