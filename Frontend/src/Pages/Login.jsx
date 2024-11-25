@@ -44,15 +44,15 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white">
-  {/* Left Section */}
-  <div className="w-1/2 px-6 py-10 md:px-20 md:py-20 flex flex-col justify-center h-full">
-    <h1 className="text-4xl text-[#114232] font-bold mb-4">
-      Selamat Datang !
-    </h1>
-    <p className="text-[#326B59] text-lg mb-8">
-      Ayo tingkatkan produktivitas pertanian anda dengan Teknologi Modern
-    </p>
+    <div className="flex flex-col-reverse lg:flex-row min-h-screen bg-white">
+      {/* Left Section */}
+      <div className="lg:w-1/2 px-6 py-10 lg:px-20 lg:py-20 flex flex-col justify-center flex-grow">
+        <h1 className="text-3xl text-[#114232] font-bold mb-4">
+          Selamat Datang !
+        </h1>
+        <p className="text-[#326B59] text-lg mb-8">
+          Ayo tingkatkan produktivitas pertanian anda dengan Teknologi Modern
+        </p>
 
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
           <div>
@@ -118,24 +118,17 @@ const Login = () => {
         </form>
       </div>
 
-  {/* Right Section */}
-  <div className="w-1/2 h-full">
-    <div className="bg-[#114232] h-full rounded-l-[25px] flex items-center justify-center">
-      <div className="flex items-center gap-4">
-        <img
-          src={WhiteLogo}
-          alt="Logo Petani GO"
-          className="w-48 h-48"
-        />
-        <h2 className="text-white text-5xl font-bold">
-          Petani GO
-        </h2>
+      {/* Right Section */}
+      <div className="lg:w-1/2 hidden lg:block">
+        <div className="bg-[#114232] h-full lg:rounded-l-[25px] flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <img src={WhiteLogo} alt="Logo Petani GO" className="w-48 h-48" />
+            <h2 className="text-white text-5xl font-bold">Petani GO</h2>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <ToastContainer />
     </div>
   );
 };
-  
+
 export default Login;

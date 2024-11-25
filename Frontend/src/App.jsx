@@ -51,7 +51,7 @@ function AppContent() {
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
                 <Route path="/Pages/DetailNews" element={<DetailNews />} />
-                <Route path="/Pages/Profile" element={<Profile />} />
+                <Route path="/Profile" element={<Profile />} />
                 <Route path="/detection" element={<DiseaseDetection />} />
             </Routes>
 
