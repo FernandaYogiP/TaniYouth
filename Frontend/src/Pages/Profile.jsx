@@ -12,9 +12,12 @@ const Profile = () => {
         profile_image: ''
     });
     const [isNameModalOpen, setIsNameModalOpen] = useState(false);
+    const [image, setImage] = useState(profileData.profile_image);
     const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+    const [message, setMessage] = useState('');
     const [newName, setNewName] = useState('');
     const [newPhone, setNewPhone] = useState('');
+    const [error, setError] = useState('');
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
         newPassword: '',
@@ -25,94 +28,104 @@ const Profile = () => {
     const navigate = useNavigate();
 
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/profile', {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-        })
-        .then(response => {
-            setProfileData(response.data.user);
-            setLoading(false); 
-        })
-        .catch(err => {
-            toast.error('Error fetching profile');
-            console.error(err);
-            setLoading(false); 
-        });
-    }, []);
-
- 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('profileImage', file);
-
-            axios.put('http://localhost:3000/uploads/profile/image', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            })
-            .then((response) => {
-                setProfileData((prev) => ({
-                    ...prev,
-                    profile_image: response.data.profileImage,  // Update profile image state with new path
-                }));
-                toast.success('Profile image updated successfully');
-            })
-            .catch((err) => {
-                toast.error('Failed to upload image');
-                console.error(err);
-            });
+    const fetchProfile = async () => {
+        const token = localStorage.getItem('token'); 
+    
+        if (!token) {
+          console.error('No token found in localStorage');
+          return;
         }
-    };
+    
+        try {
+          const response = await axios.get('http://localhost:3000/profile', {
+            headers: {
+              'Authorization': `Bearer ${token}`, 
+            },
+          });
+    
+          setProfileData(response.data.user); 
+          setImage(response.data.user.profile_image); 
+          setLoading(false);
+        } catch (error) {
+          setError('Error fetching profile');
+          setLoading(false);
+        }
+      };
+    
+      useEffect(() => {
+        fetchProfile();
+      }, []);
+
+    const handleImageChange = async (event) => {
+        const formData = new FormData();
+        formData.append('file', event.target.files[0]);
+      
+        try {
+          const response = await axios.put('http://localhost:3000/upload/profile/image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+      
+          console.log('Image uploaded successfully:', response.data);
+          setMessage(response.data.message);
+          setImage(response.data.profileImage);
+        } catch (error) {
+         
+          console.error('Error uploading image:', error.response ? error.response.data : error.message);
+          setMessage('Error uploading image');
+        }
+      };
+          
     
 
-    const handleNameSubmit = (e) => {
+      const handleNameSubmit = async (e) => {
         e.preventDefault();
         if (newName.trim()) {
-            axios.put('http://localhost:3000/profile/name', { name: newName.trim() }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-            .then(() => {
-                setProfileData(prev => ({ ...prev, name: newName.trim() }));
+            try {
+                await axios.put('http://localhost:3000/profile/name', 
+                    { name: newName.trim() }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    }
+                });
+    
+                setProfileData(prev => ({ ...prev, username: newName.trim() }));
                 setIsNameModalOpen(false);
                 toast.success('Name updated successfully');
-            })
-            .catch(err => {
+            } catch (err) {
                 toast.error('Failed to update name');
                 console.error(err);
-            });
+            }
         }
     };
 
-    const handlePhoneSubmit = (e) => {
+    const handlePhoneSubmit = async (e) => {
         e.preventDefault();
         if (newPhone.trim()) {
-            axios.post('http://localhost:3000/profile/phone', { phoneNumber: newPhone.trim() }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-            .then(() => {
-                setProfileData(prev => ({ ...prev, phoneNumber: newPhone.trim() }));
-                setNewPhone(''); 
-                toast.success('Phone number added successfully');
-            })
-            .catch(err => {
+            try {
+                await axios.put('http://localhost:3000/profile/phone', 
+                    { phoneNumber: newPhone.trim() }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    }
+                });
+    
+                setProfileData(prev => ({ ...prev, phone_number: newPhone.trim() }));
+                setIsPhoneModalOpen(false);
+                toast.success('Phone number updated successfully');
+            } catch (err) {
                 toast.error('Failed to update phone number');
                 console.error(err);
-            });
+            }
         }
     };
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         const { currentPassword, newPassword, confirmPassword } = passwordData;
     
-        // Validate the form
         if (!currentPassword || !newPassword || !confirmPassword) {
             toast.error('All fields are required');
             return;
@@ -123,27 +136,29 @@ const Profile = () => {
             return;
         }
     
-        setLoading(true); // Set loading state to true
+        setLoading(true); 
     
-        axios.put('http://localhost:3000/profile/password', { currentPassword, newPassword }, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        .then(() => {
+        try {
+          await axios.put('http://localhost:3000/profile/password', 
+                { currentPassword, newPassword }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            });
+    
             toast.success('Password updated successfully');
-            setIsPasswordModalOpen(false);  // Close the modal
+            setIsPasswordModalOpen(false); 
             setPasswordData({
                 currentPassword: '',
                 newPassword: '',
                 confirmPassword: ''
-            });  // Reset the password form
-        })
-        .catch(err => {
+            });  
+        } catch (err) {
             toast.error('Failed to update password');
             console.error(err);
-        })
-        .finally(() => {
-            setLoading(false); // Reset loading state
-        });
+        } finally {
+            setLoading(false); 
+        }
     };
     
 
@@ -186,11 +201,15 @@ const Profile = () => {
                     </div>
                     <div className="relative w-32 h-32 mx-auto -mt-16 mb-4">
                         <div className="w-full h-full rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-200">
-                            {profileData.profile_image ? (
+                            {image ? (
                                 <img 
-                                    src={profileData.profileImage} 
+                                    src={`http://localhost:3000/${profileData.profile_image}`} 
                                     alt="Profile" 
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        console.error('Image failed to load:', e);
+                                        e.target.src = 'https://via.placeholder.com/150'; // fallback image
+                                    }}
                                 />
                             ) : (
                                 <FaUser className="w-full h-full p-4 text-gray-400" />
@@ -207,6 +226,7 @@ const Profile = () => {
                                 className="hidden"
                             />
                         </label>
+                        {message && <p className="text-center text-sm text-gray-600 mt-2">{message}</p>}
                     </div>
                     <div className="p-6">
                         <div className="space-y-4">
@@ -328,71 +348,65 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-
-            {/* Password Change Modal */}
-            {isPasswordModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Password</h2>
-                        <form onSubmit={handlePasswordChange}>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="text-sm text-[#114232]">Password Saat Ini</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.currentPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            currentPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-sm text-[#114232]">Password Baru</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.newPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            newPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-sm text-[#114232]">Konfirmasi Password Baru</label>
-                                    <input
-                                        type="password"
-                                        value={passwordData.confirmPassword}
-                                        onChange={(e) => setPasswordData(prev => ({
-                                            ...prev,
-                                            confirmPassword: e.target.value
-                                        }))}
-                                        className="w-full p-2 border rounded-lg focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex justify-end gap-2 mt-6">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsPasswordModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-[#326B59] text-white rounded-lg hover:bg-[#114232]"
-                                >
-                                    Simpan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+       
+       {isPasswordModalOpen && (
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white rounded-lg p-6 w-96">
+            <h2 className="text-xl font-semibold mb-4">Ubah Password</h2>
+            <form onSubmit={handlePasswordChange}>
+                <div className="mb-4">
+                    <label htmlFor="currentPassword" className="block text-sm text-[#114232]">Password Lama</label>
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        value={passwordData.currentPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
                 </div>
-            )}
+                <div className="mb-4">
+                    <label htmlFor="newPassword" className="block text-sm text-[#114232]">Password Baru</label>
+                    <input
+                        type="password"
+                        id="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="confirmPassword" className="block text-sm text-[#114232]">Konfirmasi Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                        className="w-full p-2 mt-2 border rounded-lg text-black"
+                        required
+                    />
+                </div>
+                <div className="flex justify-between">
+                    <button
+                        type="button"
+                        onClick={() => setIsPasswordModalOpen(false)}
+                        className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
+                    >
+                        Batal
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-[#326B59] text-white rounded-lg hover:bg-[#114232] disabled:opacity-50"
+                        disabled={loading}  
+                    >
+                        {loading ? 'Loading...' : 'Simpan'}
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
+)}        </div>
     );
 };
 

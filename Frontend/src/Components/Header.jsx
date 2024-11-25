@@ -234,7 +234,7 @@ const Header = () => {
             <div className="hidden lg:block">
                 <button className="bg-[#114232] hover:bg-[#326B59] text-white px-6 rounded-b-xl transition-all duration-300 h-16 hover:h-20 -mt-8 text-lg font-bold flex items-center justify-center group overflow-hidden active:scale-95 touch-manipulation">
                     {isLoggedIn ? (
-                        <Link to="/profile" className="transform transition-transform duration-300 group-hover:translate-y-2">
+                        <Link to="/Pages/Profile" className="transform transition-transform duration-300 group-hover:translate-y-2">
                             <FaUser className="h-8 w-8 rounded-full"/>
                         </Link>
                     ) : (

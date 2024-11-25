@@ -29,6 +29,7 @@ const Login = () => {
         password,
       });
       localStorage.setItem("token", respon.data.token);
+      localStorage.setItem('userId', respon.data.userId);
       navigate("/?success=Login Berhasil");
     } catch (error) {
       if (error.response) {
@@ -122,11 +123,26 @@ const Login = () => {
       <div className="lg:w-1/2 hidden lg:block">
         <div className="bg-[#114232] h-full lg:rounded-l-[25px] flex items-center justify-center">
           <div className="flex items-center gap-4">
+<<<<<<< HEAD
             <img src={WhiteLogo} alt="Logo Petani GO" className="w-48 h-48" />
             <h2 className="text-white text-5xl font-bold">Petani GO</h2>
           </div>
         </div>
       </div>
+=======
+            <img
+              src={WhiteLogo}
+              alt="Logo Petani GO"
+              className="w-48 h-48"
+            />
+            <h2 className="text-white text-5xl font-bold">
+              Petani GO
+            </h2>
+          </div>
+        </div>
+      </div>
+      <ToastContainer />
+>>>>>>> ec629ab3bf50c4c1d5285f2638d7149a27594483
     </div>
   );
 };
