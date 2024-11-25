@@ -231,10 +231,18 @@ const Profile = () => {
                                         onClick={() => setIsPhoneModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
                                     >
-                                        {profileData.phoneNumber === '-' ? 'Tambah' : 'Ubah'}
+                                        {profileData.phone_number === '-' ? 'Tambah' : 'Ubah'}
                                     </button>
                                 </div>
                             </div>
+
+                            <div className="border-b pb-4">
+                                <h2 className="text-sm text-[#114232] font-medium">Email</h2>
+                                <div className="flex items-center justify-between">
+                                    <p className="text-lg font-medium text-[#114232]">{profileData.email}</p>
+                                </div>
+                            </div>
+
                             <div className="border-b pb-4">
                                 <h2 className="text-sm text-[#114232] font-medium">Password</h2>
                                 <div className="flex items-center justify-between">
@@ -326,7 +334,7 @@ const Profile = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg p-6 w-full max-w-md">
                         <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Password</h2>
-                        <form onSubmit={handlePasswordSubmit}>
+                        <form onSubmit={handlePasswordChange}>
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-sm text-[#114232]">Password Saat Ini</label>
