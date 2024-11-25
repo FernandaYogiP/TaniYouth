@@ -4,18 +4,9 @@ import { query } from '../database/db.js';
 import dotenv from 'dotenv';
 import { OAuth2Client } from 'google-auth-library';
 import multer from 'multer';
+import path from 'path';
 
 dotenv.config();
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-const upload = multer({ storage: storage });
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -101,7 +92,7 @@ const login = async (req, res) => {
       userId: user.id,
       username: user.username,
       email: user.email,
-      picture: user.picture,
+      profile_image: user.profile_image,
     });
 
   } catch (error) {
@@ -156,147 +147,162 @@ const googleAuth = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
-  const { userId } = req.user; 
+  const { id: userId } = req.user; 
 
   try {
-      const userQuery = 'SELECT id, username, email, phone_number, profile_image FROM users WHERE id = ?';
-      const userResult = await query(userQuery, [userId]);
+    const userQuery = 'SELECT id, username, email, phone_number, profile_image FROM users WHERE id = ?';
+    const [userResult] = await query(userQuery, [userId]); 
 
-      if (userResult.length === 0) {
-          return res.status(404).json({ message: 'User not found.' });
-      }
-      res.status(200).json({ user: userResult[0] });
+    if (!userResult) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+  
+    res.status(200).json({ user: userResult });
   } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error retrieving profile.' });
+    console.error(error);
+    return res.status(500).json({ message: 'Error retrieving profile.' });
   }
 };
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); 
+  },
+});
+
+const upload = multer({ storage: storage });
+
 const addProfileImage = async (req, res) => {
   try {
-    // Check if a file was uploaded
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Check if the file type is allowed
+    console.log('Uploaded file:', req.file);
+
+  
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!allowedMimeTypes.includes(req.file.mimetype)) {
-      fs.unlinkSync(req.file.path); // Delete the uploaded file if it's invalid
+      fs.unlinkSync(req.file.path); 
       return res.status(400).json({ message: 'Invalid file type. Only image files are allowed.' });
     }
 
-    // Construct the file path for storage (relative to the 'uploads' folder)
     const fileName = req.file.filename;
-    const profileImagePath = `uploads/${fileName}`;
+    const profileImagePath = path.join('uploads', fileName); 
 
-    // Update the user's profile image in the database
-    const updateQuery = 'UPDATE users SET profile_image = ? WHERE id = ?';
-    await query(updateQuery, [profileImagePath, req.user.id]);
+    if (!req.user || !req.user.id) {
+      return res.status(400).json({ message: 'User ID is missing or invalid' });
+    }
 
-    // Respond with the updated profile image path
-    res.status(200).json({
-      message: 'Profile image uploaded successfully',
-      profileImage: profileImagePath,  // Return relative path for frontend
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error uploading profile image' });
-  }
-};
-
-const updateName = async (req, res) => {
-  const { userId } = req.user;
-  const { name } = req.body;
-
-  if (!name) {
-    return res.status(400).json({ message: 'Name is required' });
-  }
-
-  try {
-    const updateNameQuery = 'UPDATE users SET username = ? WHERE id = ?';
-    const result = await query(updateNameQuery, [name, userId]);
+   
+    const result = await query('UPDATE users SET profile_image = ? WHERE id = ?', [profileImagePath, req.user.id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     res.status(200).json({
-      message: 'Username updated successfully',
-      name,
+      message: 'Profile image uploaded successfully',
+      profileImage: profileImagePath,
     });
+
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Error updating username.' });
+    console.error('Error uploading image:', error);  
+    res.status(500).json({ message: 'Error uploading profile image', error: error.message });
+  }
+};
+
+
+
+
+const updateName = async (req, res) => {
+  const { name } = req.body;  
+  const { id } = req.user;  
+
+  if (!name || !id) {
+      return res.status(400).json({ message: 'Name or userId is missing' });
+  }
+
+  try {
+     
+      const result = await query('UPDATE users SET username = ? WHERE id = ?', [name, id]);
+
+      console.log('Update result:', result);
+
+      if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'Name updated successfully' });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Failed to update name', error: err.message });
   }
 };
 
 const addPhoneNumber = async (req, res) => {
-  const { userId } = req.user;
-  const { phoneNumber } = req.body;
-
-  if (!phoneNumber) {
-    return res.status(400).json({ message: 'Phone number is required' });
-  }
-
-  try {
-    const checkUserQuery = 'SELECT * FROM users WHERE id = ?';
-    const userResult = await query(checkUserQuery, [userId]);
-
-    if (userResult.length === 0) {
-      return res.status(404).json({ message: 'User not found' });
+  const { phoneNumber } = req.body;  
+    const { id } = req.user;  
+    if (!phoneNumber || !id) {
+        return res.status(400).json({ message: 'Phone number or userId is missing' });
     }
 
-    const updatePhoneQuery = 'UPDATE users SET phone_number = ? WHERE id = ?';
-    const updatePhoneResult = await query(updatePhoneQuery, [phoneNumber, userId]);
+    try {
+        const result = await query('UPDATE users SET phone_number = ? WHERE id = ?', [phoneNumber, id]);
+        console.log('Update result:', result);
 
-    if (updatePhoneResult.affectedRows === 0) {
-      return res.status(500).json({ message: 'Failed to update phone number' });
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Phone number updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to update phone number', error: err.message });
     }
-
-    res.status(200).json({
-      message: 'Phone number updated successfully',
-      phoneNumber: phoneNumber,
-    });
-
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Error updating phone number.' });
-  }
 };
 
 const updatePassword = async (req, res) => {
-  const { userId } = req.user; 
-  const { currentPassword, newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body;  
+    const { id } = req.user;  
 
-  if (!currentPassword || !newPassword) {
-    return res.status(400).json({ message: 'Current password and new password are required.' });
-  }
-
-  try {
-    const userQuery = 'SELECT * FROM users WHERE id = ?';
-    const userResult = await query(userQuery, [userId]);
-
-    if (userResult.length === 0) {
-      return res.status(404).json({ message: 'User not found.' });
+    if (!currentPassword || !newPassword || !id) {
+        return res.status(400).json({ message: 'Current password, new password, or userId is missing' });
     }
 
-    const user = userResult[0];
-    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    try {
+      const userResult = await query('SELECT * FROM users WHERE id = ?', [id]);
+      console.log('Update result:', userResult);
 
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Incorrect current password.' });
+        if (userResult.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = userResult[0];  
+
+     
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const result = await query('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, id]);
+        console.log('Update result:', result);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Failed to update password' });
+        }
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to update password', error: err.message });
     }
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-    const updatePasswordQuery = 'UPDATE users SET password = ? WHERE id = ?';
-    await query(updatePasswordQuery, [hashedNewPassword, userId]);
-
-    res.status(200).json({ message: 'Password updated successfully.' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Error updating password.' });
-  }
 };
 
 export {
@@ -305,8 +311,8 @@ export {
   googleAuth,
   getProfile,
   addProfileImage,
-  upload,
   updatePassword,
   updateName,
-  addPhoneNumber
+  addPhoneNumber,
+  upload
 };

@@ -1,3 +1,6 @@
-GET http://localhost:3000/profile
+PUT http://localhost:3000/profile/phone
 Content-Type: application/json
 
+{
+    "phone_number": "0211413434"
+}

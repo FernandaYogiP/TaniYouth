@@ -29,6 +29,7 @@ const Login = () => {
         password,
       });
       localStorage.setItem("token", respon.data.token);
+      localStorage.setItem('userId', respon.data.userId);
       navigate("/?success=Login Berhasil");
     } catch (error) {
       if (error.response) {
@@ -45,7 +46,7 @@ const Login = () => {
 
   return (
     <div className="flex h-screen bg-white">
-  {/* Left Section */}
+
   <div className="w-1/2 px-6 py-10 md:px-20 md:py-20 flex flex-col justify-center h-full">
     <h1 className="text-4xl text-[#114232] font-bold mb-4">
       Selamat Datang !
@@ -118,7 +119,6 @@ const Login = () => {
         </form>
       </div>
 
-  {/* Right Section */}
   <div className="w-1/2 h-full">
     <div className="bg-[#114232] h-full rounded-l-[25px] flex items-center justify-center">
       <div className="flex items-center gap-4">
