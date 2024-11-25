@@ -203,7 +203,7 @@ const Profile = () => {
                         <div className="w-full h-full rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-200">
                             {image ? (
                                 <img 
-                                    src={`http://localhost:3000/${profileData.profile_image}`} 
+                                    src={`http://localhost:3000/${image}`} 
                                     alt="Profile" 
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
@@ -353,7 +353,7 @@ const Profile = () => {
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
         <div className="bg-white rounded-lg p-6 w-96">
             <h2 className="text-xl font-semibold mb-4">Ubah Password</h2>
-            <form onSubmit={handlePasswordChange}>
+            <form onSubmit={handlePasswordSubmit}>
                 <div className="mb-4">
                     <label htmlFor="currentPassword" className="block text-sm text-[#114232]">Password Lama</label>
                     <input

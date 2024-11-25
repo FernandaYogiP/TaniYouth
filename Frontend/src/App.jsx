@@ -8,7 +8,6 @@ import Forum from './Pages/Forum';
 import Knowledge from './Pages/Articles/Knowledge';
 import Cultivation from './Pages/Articles/Cultivation';
 import Solutions from './Pages/Articles/Solutions';
-import Chatbot from './Components/Chatbot';
 import DetailKnowledge from './Pages/Articles/DetailKnowledge';
 import DetailSolutions from './Pages/Articles/DetailSolutions';
 import DetailCultivation from './Pages/Articles/DetailCultivation';
@@ -51,12 +50,11 @@ function AppContent() {
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
                 <Route path="/Pages/DetailNews" element={<DetailNews />} />
-                <Route path="/Profile" element={<Profile />} />
+                <Route path="/Pages/Profile" element={<Profile />} />
                 <Route path="/detection" element={<DiseaseDetection />} />
             </Routes>
 
             {showHeaderFooter && <Footer />}
-            {showHeaderFooter && <Chatbot />}
         </div>
     );
 }

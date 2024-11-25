@@ -117,13 +117,13 @@ const googleAuth = async (req, res) => {
     if (checkUserResults.length > 0) {
       user = checkUserResults[0];
     } else {
-      const insertQuery = 'INSERT INTO users (username, email, profile_images) VALUES (?, ?, ?)';
+      const insertQuery = 'INSERT INTO users (username, email, profile_image) VALUES (?, ?, ?)';
       const insertResult = await query(insertQuery, [userInfo.name, userInfo.email, userInfo.picture]);
       user = {
         id: insertResult.insertId,
         username: userInfo.name,
         email: userInfo.email,
-        profile_image: userInfo.profile_images,
+        profile_image: userInfo.profile_image,
       };
     }
 
