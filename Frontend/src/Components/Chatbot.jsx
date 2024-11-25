@@ -39,7 +39,6 @@ const Chatbot = () => {
                 setInputMessage('');
                 setIsListening(false);
                 
-                // Simulate bot response
                 setIsTyping(true);
                 setTimeout(() => {
                     const botMessage = {

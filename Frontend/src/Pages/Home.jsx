@@ -94,7 +94,7 @@ const Home = () => {
                 <Link
                   to="/articles/knowledge"
                   onClick={scrollToTop}
-                  className={`${cardClasses.button} w-full`}
+                  className={`${cardClasses.button} lg:w-full justify-center`}
                 >
                   Artikel Selengkapnya →
                 </Link>
@@ -182,7 +182,7 @@ const Home = () => {
                 <Link
                   to="/news"
                   onClick={scrollToTop}
-                  className={`${cardClasses.button} w-full`}
+                  className={`${cardClasses.button} lg:w-full justify-center`}
                 >
                   Berita Selengkapnya →
                 </Link>
