@@ -165,14 +165,13 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Title Block */}
+           
             <div className="w-full bg-[#114232] py-6">
                 <h1 className="text-white text-3xl font-bold text-center">PROFIL</h1>
             </div>
 
             <div className="py-8">
                 <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-                    {/* Profile Header */}
                     <div className="bg-[#114232] p-6 relative">
                         <div className="flex justify-between items-center">
                             <h1 className="text-2xl font-bold text-white">Profil Saya</h1>
@@ -185,13 +184,11 @@ const Profile = () => {
                             </button>
                         </div>
                     </div>
-
-                    {/* Profile Picture Section */}
                     <div className="relative w-32 h-32 mx-auto -mt-16 mb-4">
                         <div className="w-full h-full rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-200">
                             {profileData.profile_image ? (
                                 <img 
-                                    src={profileData.profile_image} 
+                                    src={profileData.profileImage} 
                                     alt="Profile" 
                                     className="w-full h-full object-cover"
                                 />
@@ -211,8 +208,6 @@ const Profile = () => {
                             />
                         </label>
                     </div>
-
-                    {/* Profile Info */}
                     <div className="p-6">
                         <div className="space-y-4">
                             <div className="border-b pb-4">
@@ -227,28 +222,23 @@ const Profile = () => {
                                     </button>
                                 </div>
                             </div>
+
                             <div className="border-b pb-4">
-                                <h2 className="text-sm text-[#114232] font-medium">Nomor Handphone</h2>
+                                <h2 className="text-sm text-[#114232] font-medium">Nomor Telepon</h2>
                                 <div className="flex items-center justify-between">
                                     <p className="text-lg font-medium text-[#114232]">{profileData.phone_number}</p>
                                     <button
                                         onClick={() => setIsPhoneModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
                                     >
-                                        {profileData.phone_number === '-' ? 'Tambah' : 'Ubah'}
+                                        {profileData.phoneNumber === '-' ? 'Tambah' : 'Ubah'}
                                     </button>
                                 </div>
                             </div>
-
-                            <div className='border-b pb-4'>
-                            <h2 className='text-sm text-[#114232] font-medium'>Email</h2>
-                            <p className='text-lg text-[#114232]'>{profileData.email}</p>
-                            </div>
-
                             <div className="border-b pb-4">
                                 <h2 className="text-sm text-[#114232] font-medium">Password</h2>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg font-medium text-[#114232]">********</p>
+                                    <p className="text-lg font-medium text-[#114232]">**********</p>
                                     <button
                                         onClick={() => setIsPasswordModalOpen(true)}
                                         className="px-4 py-1 text-sm bg-[#326B59] text-white rounded-lg hover:bg-[#114232] transition-colors duration-300"
@@ -262,24 +252,26 @@ const Profile = () => {
                 </div>
             </div>
 
-            {/* Name Change Modal */}
             {isNameModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Nama</h2>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-96">
+                        <h2 className="text-xl font-semibold mb-4">Ubah Username</h2>
                         <form onSubmit={handleNameSubmit}>
-                            <input
-                                type="text"
-                                value={newName}
-                                onChange={(e) => setNewName(e.target.value)}
-                                placeholder="Masukkan nama baru"
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                            />
-                            <div className="flex justify-end gap-2">
+                            <div className="mb-4">
+                                <label htmlFor="newName" className="block text-sm text-[#114232]">Nama Baru</label>
+                                <input
+                                    type="text"
+                                    id="newName"
+                                    value={newName}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    className="w-full p-2 mt-2 border rounded-lg text-black"
+                                />
+                            </div>
+                            <div className="flex justify-between">
                                 <button
                                     type="button"
                                     onClick={() => setIsNameModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
                                 >
                                     Batal
                                 </button>
@@ -294,27 +286,26 @@ const Profile = () => {
                     </div>
                 </div>
             )}
-
-            {/* Phone Number Modal */}
             {isPhoneModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                        <h2 className="text-xl font-semibold text-[#114232] mb-4">
-                            {profileData.phoneNumber === '-' ? 'Tambah Nomor' : 'Ubah Nomor'}
-                        </h2>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6 w-96">
+                        <h2 className="text-xl font-semibold mb-4">Tambah Nomor Telepon</h2>
                         <form onSubmit={handlePhoneSubmit}>
-                            <input
-                                type="tel"
-                                value={newPhone}
-                                onChange={(e) => setNewPhone(e.target.value)}
-                                placeholder="Masukkan nomor handphone"
-                                className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:border-[#114232] text-[#114232] placeholder-[#326B59]/50"
-                            />
-                            <div className="flex justify-end gap-2">
+                            <div className="mb-4">
+                                <label htmlFor="newPhone" className="block text-sm text-[#114232]">Nomor Telepon Baru</label>
+                                <input
+                                    type="text"
+                                    id="newPhone"
+                                    value={newPhone}
+                                    onChange={(e) => setNewPhone(e.target.value)}
+                                    className="w-full p-2 mt-2 border rounded-lg text-black"
+                                />
+                            </div>
+                            <div className="flex justify-between">
                                 <button
                                     type="button"
                                     onClick={() => setIsPhoneModalOpen(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700"
                                 >
                                     Batal
                                 </button>
@@ -335,7 +326,7 @@ const Profile = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg p-6 w-full max-w-md">
                         <h2 className="text-xl font-semibold text-[#114232] mb-4">Ubah Password</h2>
-                        <form onSubmit={handlePasswordChange}>
+                        <form onSubmit={handlePasswordSubmit}>
                             <div className="space-y-4">
                                 <div>
                                     <label className="text-sm text-[#114232]">Password Saat Ini</label>

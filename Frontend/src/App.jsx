@@ -17,10 +17,10 @@ import Video from './Pages/Module/Video';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import DetailNews from './Pages/DetailNews';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { ToastContainer } from 'react-toastify';
 import DiseaseDetection from './Pages/DiseaseDetection';
 import Profile from './Pages/Profile';
-import { ToastContainer } from 'react-toastify';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // Wrapper component untuk mengecek path
 function AppContent() {
@@ -29,7 +29,7 @@ function AppContent() {
     const showHeaderFooter = !excludedPages.includes(location.pathname);
 
     return (
-        <div className="bg-green-900 text-white relative min-h-screen">
+        <div className="bg-green-900 text-white relative min-h-screen font-poppins">
             {showHeaderFooter && <Header />}
             <ToastContainer />
 
@@ -51,7 +51,8 @@ function AppContent() {
                 <Route path="/Pages/Login" element={<Login />} />
                 <Route path="/Pages/SignUp" element={<SignUp />} />
                 <Route path="/Pages/DetailNews" element={<DetailNews />} />
-                <Route path="profile" element={<Profile />} />
+                <Route path="/Pages/Profile" element={<Profile />} />
+                <Route path="/detection" element={<DiseaseDetection />} />
             </Routes>
 
             {showHeaderFooter && <Footer />}
