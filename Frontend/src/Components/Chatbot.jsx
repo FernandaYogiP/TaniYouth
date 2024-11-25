@@ -39,11 +39,28 @@ const Chatbot = () => {
                 setInputMessage('');
                 setIsListening(false);
                 
-                // Simulate bot response
                 setIsTyping(true);
                 setTimeout(() => {
+                    const lowerMessage = transcript.toLowerCase();
+                    let botResponse;
+
+                    // Simple response logic
+                    if (lowerMessage.includes("halo") || lowerMessage.includes("hai") || lowerMessage.includes("hi")) {
+                        botResponse = "Hai! Ada yang bisa saya bantu?";
+                    } else if (lowerMessage.includes("tanaman") || lowerMessage.includes("tani")) {
+                        botResponse = "Untuk informasi tentang pertanian, Anda bisa mengunjungi halaman Artikel atau Forum Diskusi kami.";
+                    } else if (lowerMessage.includes("penyakit") || lowerMessage.includes("hama")) {
+                        botResponse = "Anda bisa menggunakan fitur Deteksi Penyakit untuk mengidentifikasi masalah pada tanaman Anda.";
+                    } else if (lowerMessage.includes("berita") || lowerMessage.includes("informasi")) {
+                        botResponse = "Anda bisa menggunakan fitur Berita untuk mendapatkan informasi terbaru tentang pertanian.";
+                    } else if (lowerMessage.includes("terima kasih")) {
+                        botResponse = "Sama-sama! Senang bisa membantu Anda.";
+                    } else {
+                        botResponse = "Maaf, saya belum bisa memahami pertanyaan Anda. Silakan coba pertanyaan lain atau kunjungi halaman Forum untuk bertanya langsung ke komunitas.";
+                    }
+
                     const botMessage = {
-                        text: "Maaf, saya masih dalam tahap pengembangan dan belum bisa memberikan jawaban yang tepat.",
+                        text: botResponse,
                         isBot: true,
                         time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
                     };
@@ -110,6 +127,8 @@ const Chatbot = () => {
                 botResponse = "Untuk informasi tentang pertanian, Anda bisa mengunjungi halaman Artikel atau Forum Diskusi kami.";
             } else if (lowerMessage.includes("penyakit") || lowerMessage.includes("hama")) {
                 botResponse = "Anda bisa menggunakan fitur Deteksi Penyakit untuk mengidentifikasi masalah pada tanaman Anda.";
+            } else if (lowerMessage.includes("berita") || lowerMessage.includes("informasi")) {
+                botResponse = "Anda bisa menggunakan fitur Berita untuk mendapatkan informasi terbaru tentang pertanian.";
             } else if (lowerMessage.includes("terima kasih")) {
                 botResponse = "Sama-sama! Senang bisa membantu Anda.";
             } else {
@@ -158,26 +177,26 @@ const Chatbot = () => {
 
             {/* Chat Window */}
             {isOpen && (
-                <div className="bg-white rounded-2xl shadow-xl w-[calc(100vw-2rem)] sm:w-[380px] h-[85vh] sm:h-[500px] flex flex-col mb-4 fixed bottom-0 right-0 sm:relative animate-slideUp">
+                <div className="bg-white rounded-2xl shadow-xl w-[95vw] max-w-[400px] h-[85vh] sm:h-[500px] flex flex-col mb-4 fixed bottom-0 right-2 sm:right-4 sm:relative animate-slideUp">
                     {/* Header */}
-                    <div className="bg-[#114232] p-3 sm:p-4 rounded-t-2xl flex items-center justify-between">
+                    <div className="bg-[#114232] p-2.5 sm:p-4 rounded-t-2xl flex items-center justify-between">
                         <button 
                             onClick={toggleChat} 
-                            className="text-white hover:bg-[#326B59] p-2 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+                            className="text-white hover:bg-[#326B59] p-1.5 sm:p-2 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
                         >
                             <RiArrowLeftLine className="w-5 h-5" />
                         </button>
                         <div className="flex flex-col items-center flex-1">
-                            <div className="bg-white rounded-full p-1.5 sm:p-2 mb-1 sm:mb-2">
-                                <RiChatSmile3Line className="w-5 h-5 sm:w-6 sm:h-6 text-[#114232]" />
+                            <div className="bg-white rounded-full p-1.5 mb-1">
+                                <RiChatSmile3Line className="w-5 h-5 text-[#114232]" />
                             </div>
-                            <h2 className="text-white text-lg sm:text-xl font-semibold">Chat Bot</h2>
+                            <h2 className="text-white text-base sm:text-lg font-semibold">Chat Bot</h2>
                         </div>
                         <div className="w-5"></div> 
                     </div>
 
                     {/* Chat Messages */}
-                    <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-3 sm:p-4 bg-gray-50">
+                    <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-2.5 sm:p-4 bg-gray-50">
                         {messages.map((message, index) => (
                             <div
                                 key={index}
@@ -231,11 +250,11 @@ const Chatbot = () => {
                     </div>
 
                     {/* Input Area */}
-                    <form onSubmit={sendMessage} className="p-3 sm:p-4 bg-[#114232] rounded-b-2xl border-t">
-                        <div className="flex items-center space-x-2 sm:space-x-3">
+                    <form onSubmit={sendMessage} className="p-2.5 sm:p-4 bg-[#114232] rounded-b-2xl border-t">
+                        <div className="flex items-center space-x-2">
                             <button 
                                 type="button" 
-                                className="text-white hover:bg-[#326B59] p-1.5 sm:p-2 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+                                className="text-white hover:bg-[#326B59] p-1.5 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
                             >
                                 <RiAttachmentLine className="w-5 h-5" />
                             </button>
@@ -244,19 +263,19 @@ const Chatbot = () => {
                                 value={inputMessage}
                                 onChange={(e) => setInputMessage(e.target.value)}
                                 placeholder="Ketik pesan..."
-                                className="flex-1 bg-white text-gray-800 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#326B59]"
+                                className="flex-1 min-w-0 bg-white text-gray-800 text-sm sm:text-base rounded-full py-1.5 sm:py-2 px-2 sm:px-4 focus:outline-none focus:ring-2 focus:ring-[#326B59]"
                             />
                             <button 
                                 type="button"
                                 onClick={toggleListening}
-                                className={`text-white p-1.5 sm:p-2 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${isListening ? 'bg-red-500 animate-pulse' : 'hover:bg-[#326B59]'}`}
+                                className={`text-white p-1.5 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${isListening ? 'bg-red-500 animate-pulse' : 'hover:bg-[#326B59]'}`}
                             >
                                 <RiMicLine className="w-5 h-5" />
                             </button>
                             <button 
                                 type="submit" 
                                 disabled={!inputMessage.trim()}
-                                className={`text-white p-1.5 sm:p-2 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${inputMessage.trim() ? 'hover:bg-[#326B59]' : 'opacity-50 cursor-not-allowed'}`}
+                                className={`text-white p-1.5 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${inputMessage.trim() ? 'hover:bg-[#326B59]' : 'opacity-50 cursor-not-allowed'}`}
                             >
                                 <RiSendPlaneLine className="w-5 h-5" />
                             </button>

@@ -203,9 +203,13 @@ const Profile = () => {
                         <div className="w-full h-full rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-200">
                             {image ? (
                                 <img 
-                                    src={`http://localhost:3000/${image}`} 
+                                    src={`http://localhost:3000/uploads/${image}`} 
                                     alt="Profile" 
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        console.error('Image failed to load:', e);
+                                        e.target.src = 'https://via.placeholder.com/150'; // fallback image
+                                    }}
                                 />
                             ) : (
                                 <FaUser className="w-full h-full p-4 text-gray-400" />
