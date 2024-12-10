@@ -24,4 +24,15 @@ export { default as VideoImage1 } from './modules/video1.png';
 export { default as VideoImage2 } from './modules/video2.png';
 export { default as VideoImage3 } from './modules/video3.png';
 export {default as GambarBerita} from './berita/gambar_berita.jpg'
+
+// Book Module Images
+export { default as BudidayaPadiRamahLingkungan } from './modules/bookimage/Budidaya Padi Ramah Lingkungan.png';
+export { default as BudidayaTanamanPadiGogo } from './modules/bookimage/Budidaya Tanaman Padi Gogo Terstandar.png';
+export { default as HamaPenyakitUtamaPadi } from './modules/bookimage/Hama dan Penyakit Utama Tanaman Padi.png';
+export { default as InovasiTeknologiPadiHibrida } from './modules/bookimage/Inovasi Teknologi Pengembangan Varietas Unggul Padi Hibrida.png';
+export { default as PenerapanDiseminasiPadiPasangSurut } from './modules/bookimage/Penerapan Diseminasi Teknologi Budidaya Padi Lahan Pasang Surut.png';
+export { default as PengendalianHamaPenyakitPadi } from './modules/bookimage/Pengendalian Hama dan Penyakit Utama Tanaman Padi.png';
+export { default as PengendalianPenyakitBlas } from './modules/bookimage/Pengendalian Penyakit Blas Pada Tanaman Padi Sawah.png';
+export { default as RekomendasiBudidayaPadi } from './modules/bookimage/Rekomendasi Budidaya Padi Untuk Berbagai Ekosistem.png';
+export { default as TeknikMengendalikanHamaPadi } from './modules/bookimage/Teknik Mengendalikan Hama dan Penyakit Tanaman Padi.png';
 // Tambahkan ekspor lainnya sesuai kebutuhan

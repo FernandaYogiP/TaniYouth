@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { RiArrowLeftSLine, RiArrowRightSLine, RiPlayCircleFill } from 'react-icons/ri';
 import { FaSearch } from 'react-icons/fa';
-import { VideoImage1, VideoImage2, VideoImage3 } from '../../assets/image';
 import { useState } from 'react';
 
 const Video = () => {
@@ -14,63 +13,57 @@ const Video = () => {
     const videos = [
         {
             id: 1,
-            title: "Sukses Bisnis Pertanian Hortikultura Dari Hulu sampai Hilir",
-            image: VideoImage1
+            title: "Teknik Budidaya Mina Padi",
+            url: "https://youtu.be/jhJAgTk_pNI?si=N3_Po7z6bFOm1t2l",
+            thumbnail: `https://img.youtube.com/vi/jhJAgTk_pNI/maxresdefault.jpg`
         },
         {
             id: 2,
-            title: "Bertani Organik Cara Petani Banyuwangi Putus Hubungan dengan Pestisida",
-            image: VideoImage2
+            title: "Budidaya Padi Organik dengan metode SRI",
+            url: "https://youtu.be/OAEHfgiEKGg?si=mJmJn4kltXbN3RAa",
+            thumbnail: `https://img.youtube.com/vi/OAEHfgiEKGg/maxresdefault.jpg`
         },
         {
             id: 3,
-            title: "Ogah Jadi Petani, Perabin",
-            image: VideoImage3
+            title: "Teknologi Pertanian Modern",
+            url: "https://youtu.be/SL7_JAmZG-s?si=U-bB_RGcQBadkY-g",
+            thumbnail: `https://img.youtube.com/vi/SL7_JAmZG-s/maxresdefault.jpg`
         },
         {
             id: 4,
-            title: "Sukses Bisnis Pertanian Hortikultura Dari Hulu sampai Hilir",
-            image: VideoImage1
+            title: "Inovasi Pertanian - Teknologi Pertanian Modern",
+            url: "https://youtu.be/OAVwmgUu8Xg?si=AZBIqVlRPTkhHwFs",
+            thumbnail: `https://img.youtube.com/vi/OAVwmgUu8Xg/maxresdefault.jpg`
         },
         {
             id: 5,
-            title: "Bertani Organik Cara Petani Banyuwangi Putus Hubungan dengan Pestisida",
-            image: VideoImage2
+            title: "Pembuktian Alat Matun Modern di Sawah",
+            url: "https://youtu.be/gzOqVBx9wcU?si=HRxp4lqtHCtoFmvt",
+            thumbnail: `https://img.youtube.com/vi/gzOqVBx9wcU/maxresdefault.jpg`
         },
         {
             id: 6,
-            title: "Ogah Jadi Petani, Perabin",
-            image: VideoImage3
+            title: "Cara Mengatasi Penyakit Hawar Daun Bakteri / Kresek pada Tanaman Padi",
+            url: "https://www.youtube.com/watch?v=akUkZNfSup8",
+            thumbnail: `https://img.youtube.com/vi/akUkZNfSup8/maxresdefault.jpg`
         },
         {
             id: 7,
-            title: "Sukses Bisnis Pertanian Hortikultura Dari Hulu sampai Hilir",
-            image: VideoImage1
+            title: "Proses Penanaman Padi | Video Animasi Edukasi",
+            url: "https://youtu.be/ktHBEHoeVwE?si=zXdQw72z7gmHdcoW",
+            thumbnail: `https://img.youtube.com/vi/ktHBEHoeVwE/maxresdefault.jpg`
         },
         {
             id: 8,
-            title: "Bertani Organik Cara Petani Banyuwangi Putus Hubungan dengan Pestisida",
-            image: VideoImage2
+            title: "Cara Mengatasi Hama Penggerek Batang Padi | Sundep & Beluk",
+            url: "https://www.youtube.com/watch?v=du3QWDm42U0",
+            thumbnail: `https://img.youtube.com/vi/du3QWDm42U0/maxresdefault.jpg`
         },
         {
             id: 9,
-            title: "Ogah Jadi Petani, Perabin",
-            image: VideoImage3
-        },
-        {
-            id: 10,
-            title: "Sukses Bisnis Pertanian Hortikultura Dari Hulu sampai Hilir",
-            image: VideoImage1
-        },
-        {
-            id: 11,
-            title: "Bertani Organik Cara Petani Banyuwangi Putus Hubungan dengan Pestisida",
-            image: VideoImage2
-        },
-        {
-            id: 12,
-            title: "Ogah Jadi Petani, Perabin",
-            image: VideoImage3
+            title: "Pertanian Padi Apung - Budidaya dan Teknologi",
+            url: "https://youtu.be/NHSR-GAsu8E?si=Io4UAN4pkwEQzW29",
+            thumbnail: `https://img.youtube.com/vi/NHSR-GAsu8E/maxresdefault.jpg`
         }
     ];
 
@@ -83,8 +76,8 @@ const Video = () => {
         const filtered = videos.filter(video => 
             video.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        setSearchResults(filtered);
         setIsSearched(true);
+        setSearchResults(filtered);
         setCurrentPage(1);
     };
 
@@ -142,24 +135,35 @@ const Video = () => {
                             <div className="border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                                 <div className="relative overflow-hidden">
                                     <img 
-                                        src={video.image} 
+                                        src={video.thumbnail} 
                                         alt={video.title} 
-                                        className="w-full h-[180px] sm:h-[200px] lg:h-[220px] object-cover transition-transform duration-500 group-hover:scale-110" 
+                                        className="w-full h-[180px] sm:h-[200px] lg:h-[220px] object-cover transition-transform duration-500 group-hover:scale-110"
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = `https://img.youtube.com/vi/${video.url.split('/').pop().split('?')[0]}/hqdefault.jpg`;
+                                        }}
                                     />
-                                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                    <a 
+                                        href={video.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center"
+                                    >
                                         <RiPlayCircleFill className="text-white text-5xl sm:text-6xl opacity-80 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110 cursor-pointer" />
-                                    </div>
+                                    </a>
                                 </div>
                                 <div className="bg-[#114232] text-white p-3 min-h-[80px] flex items-center justify-center transition-colors duration-300 hover:bg-[#326B59]">
                                     <h2 className="text-base font-medium text-center">{video.title}</h2>
                                 </div>
                             </div>
-                            <Link 
-                                to="#"
+                            <a 
+                                href={video.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition-all duration-300 hover:shadow-md transform hover:-translate-y-1 w-fit self-start"
                             >
                                 Lihat Video →
-                            </Link>
+                            </a>
                         </div>
                     ))}
                 </div>

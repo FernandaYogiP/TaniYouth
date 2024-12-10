@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom';
 import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { BookImage1, BookImage2, BookImage3 } from '../../assets/image';
 import { useState } from 'react';
+
+import {
+    BudidayaPadiRamahLingkungan,
+    BudidayaTanamanPadiGogo,
+    HamaPenyakitUtamaPadi,
+    InovasiTeknologiPadiHibrida,
+    PenerapanDiseminasiPadiPasangSurut,
+    PengendalianHamaPenyakitPadi,
+    PengendalianPenyakitBlas,
+    RekomendasiBudidayaPadi,
+    TeknikMengendalikanHamaPadi
+} from '../../assets/image';
 
 const Book = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,87 +24,75 @@ const Book = () => {
     const modules = [
         {
             id: 1,
-            title: "Rekomendasi Budidaya Padi pada Berbagai Agroekosistem",
-            author: "Zuliana Susanti DKK",
-            year: "2020",
-            image: BookImage1
+            title: "Budidaya Padi Ramah Lingkungan",
+            author: "Budiono",
+            year: "2023",
+            image: BudidayaPadiRamahLingkungan,
+            pdfUrl: "/pdfs/Budidaya Padi Ramah Lingkungan.pdf"
         },
         {
             id: 2,
             title: "Budidaya Tanaman Padi Gogo Terstandar",
-            author: "Bambai Sri Suryani M DKK",
+            author: "Sri Suryani M. Rambe",
             year: "2024",
-            image: BookImage2
+            image: BudidayaTanamanPadiGogo,
+            pdfUrl: "/pdfs/Budidaya Tanaman Padi Gogo Terstandar.pdf"
         },
         {
             id: 3,
-            title: "Peningkatan Produksi Padi Dengan Rekayasa Jarak Tanam",
-            author: "Agustiani DKK",
-            year: "2019",
-            image: BookImage3
+            title: "Hama dan Penyakit Utama Tanaman Padi",
+            author: "Bambang Wijayanto Kiswanto",
+            year: "2013",
+            image: HamaPenyakitUtamaPadi,
+            pdfUrl: "/pdfs/Hama dan Penyakit Utama Tanaman Padi.pdf"
         },
         {
             id: 4,
-            title: "Rekomendasi Budidaya Padi pada Berbagai Agroekosistem",
-            author: "Zuliana Susanti DKK",
-            year: "2020",
-            image: BookImage1
+            title: "Inovasi Teknologi Pengembangan Varietas Unggul Padi Hibrida",
+            author: "Satoto",
+            year: "2021",
+            image: InovasiTeknologiPadiHibrida,
+            pdfUrl: "/pdfs/Inovasi Teknologi Pengembangan Varietas Unggul Padi Hibrida.pdf"
         },
         {
             id: 5,
-            title: "Budidaya Tanaman Padi Gogo Terstandar",
-            author: "Bambai Sri Suryani M DKK",
-            year: "2024",
-            image: BookImage2
+            title: "Penerapan Diseminasi Teknologi Budidaya Padi Pasang Surut",
+            author: "Akhmad Musyafak",
+            year: "2023",
+            image: PenerapanDiseminasiPadiPasangSurut,
+            pdfUrl: "/pdfs/Penerapan Diseminasi Teknologi Budidaya Padi Pasang Surut.pdf"
         },
         {
             id: 6,
-            title: "Peningkatan Produksi Padi Dengan Rekayasa Jarak Tanam",
-            author: "Agustiani DKK",
-            year: "2019",
-            image: BookImage3
+            title: "Pengendalian Hama & Penyakit Utama Tanaman Padi",
+            author: "Suprihanto, dkk",
+            year: "2024",
+            image: PengendalianHamaPenyakitPadi,
+            pdfUrl: "/pdfs/Pengendalian Hama & Penyakit Utama Tanaman Padi.pdf"
         },
         {
             id: 7,
-            title: "Rekomendasi Budidaya Padi pada Berbagai Agroekosistem",
-            author: "Zuliana Susanti DKK",
-            year: "2020",
-            image: BookImage1
+            title: "Pengendalian Penyakit Blas Pada Tanaman Padi",
+            author: "Anis Fahri",
+            year: "2023",
+            image: PengendalianPenyakitBlas,
+            pdfUrl: "/pdfs/Pengendalian Penyakit Blas Pada Tanaman Padi.pdf"
         },
         {
             id: 8,
-            title: "Budidaya Tanaman Padi Gogo Terstandar",
-            author: "Bambai Sri Suryani M DKK",
-            year: "2024",
-            image: BookImage2
+            title: "Rekomendasi Budidaya Padi untuk Berbagai Ekosistem",
+            author: "Priatna Sasmita",
+            year: "2021",
+            image: RekomendasiBudidayaPadi,
+            pdfUrl: "/pdfs/Rekomendasi Budidaya Padi untuk Berbagai Ekosistem.pdf"
         },
         {
             id: 9,
-            title: "Peningkatan Produksi Padi Dengan Rekayasa Jarak Tanam",
-            author: "Agustiani DKK",
-            year: "2019",
-            image: BookImage3
-        },
-        {
-            id: 10,
-            title: "Rekomendasi Budidaya Padi pada Berbagai Agroekosistem",
-            author: "Zuliana Susanti DKK",
-            year: "2020",
-            image: BookImage1
-        },
-        {
-            id: 11,
-            title: "Budidaya Tanaman Padi Gogo Terstandar",
-            author: "Bambai Sri Suryani M DKK",
-            year: "2024",
-            image: BookImage2
-        },
-        {
-            id: 12,
-            title: "Peningkatan Produksi Padi Dengan Rekayasa Jarak Tanam",
-            author: "Agustiani DKK",
-            year: "2019",
-            image: BookImage3
+            title: "Teknik Mengendalikan Hama dan Penyakit Padi",
+            author: "Direktorat Perlindungan Tanaman Pangan",
+            year: "2023",
+            image: TeknikMengendalikanHamaPadi,
+            pdfUrl: "/pdfs/Teknik Mengendalikan Hama dan Penyakit Padi.pdf"
         }
     ];
 
@@ -183,9 +182,17 @@ const Book = () => {
                             </div>
                             <Link 
                                 to="#"
+                                onClick={() => {
+                                    const link = document.createElement('a');
+                                    link.href = module.pdfUrl;
+                                    link.download = module.title + '.pdf';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                }}
                                 className="mt-4 border border-[#114232] text-[#114232] px-4 py-2 rounded-md hover:bg-[#114232] hover:text-white transition-all duration-300 hover:shadow-md transform hover:-translate-y-1 w-fit self-start"
                             >
-                                Lihat Modul →
+                                Unduh Modul →
                             </Link>
                         </div>
                     ))}
