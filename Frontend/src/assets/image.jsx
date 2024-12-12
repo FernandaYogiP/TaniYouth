@@ -36,3 +36,13 @@ export { default as PengendalianPenyakitBlas } from './modules/bookimage/Pengend
 export { default as RekomendasiBudidayaPadi } from './modules/bookimage/Rekomendasi Budidaya Padi Untuk Berbagai Ekosistem.png';
 export { default as TeknikMengendalikanHamaPadi } from './modules/bookimage/Teknik Mengendalikan Hama dan Penyakit Tanaman Padi.png';
 // Tambahkan ekspor lainnya sesuai kebutuhan
+
+export { default as Berita1 } from './berita/berita1.png';
+export { default as Berita2 } from './berita/berita2.png';
+export { default as Berita3 } from './berita/berita3.png';
+export { default as Berita4 } from './berita/berita4.png';
+export { default as Berita5 } from './berita/berita5.png';
+export { default as Berita6 } from './berita/berita6.png';
+export { default as Berita7 } from './berita/berita7.png';
+export { default as Berita8 } from './berita/berita8.png';
+export { default as Berita9 } from './berita/berita9.png';
