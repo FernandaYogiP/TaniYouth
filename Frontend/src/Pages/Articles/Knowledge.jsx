@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom';
 import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { KnowledgeImage, Watermark } from '../../assets/image';
 import { useState } from 'react';
 
+import { BudidayaPadiOrganik, 
+    TeknologiUntukMasaDepanPertanian,
+    jenisTanahSuburDanCaraMengenalinya, 
+    DampakPerubahanIklimProduktivitasPertanian,
+    PemanfaatanPupukOrganikVsPupukKimia, 
+    TeknologiIrigasiModernUntukEfisiensiPenggunaanAir,
+    PeranAiDalamPertanianModern, 
+    KonsepPertanianUntukBerkelanjutanMasaDepan, 
+    ManfaatTeknologiIotDalamPengelolaanLahanPertanian, 
+    DampakPerubahanIklimTerhadapProduksiPertanian, 
+    Watermark } from '../../assets/image';
 const Knowledge = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,14 +20,88 @@ const Knowledge = () => {
     const [isSearched, setIsSearched] = useState(false);
     const articlesPerPage = 9;
 
-    const articles = Array.from({ length: 12 }, (_, index) => ({
-        id: index + 1,
-        title: "Budidaya Padi Organik",
-        date: "September 06, 2021",
-        author: "Dinpertan Pangan",
-        image: KnowledgeImage,
-        category: "knowledge"
-    }));
+    const articles = [
+        {
+            id: 1,
+            title: "Budidaya Padi Organik",
+            date: "September 06,2021",
+            author: "Dinpertan Pangan",
+            image: BudidayaPadiOrganik,
+            category: "Knowledge"
+        },
+        {
+            id: 2,
+            title: "Teknlogi Untuk Masa Depan Pertanian",
+            date: "2023",
+            author: "Budiono",
+            image: TeknologiUntukMasaDepanPertanian,
+            category: "Knowledge"
+        },
+        {
+            id: 3,
+            title: "Jenis-jenis Tanah Subur dan Cara Mengenalinya",
+            date: "2023",
+            author: "Budiono",
+            image: jenisTanahSuburDanCaraMengenalinya,
+            category: "Knowledge"
+        },
+        {
+            id: 4,
+            title: "Dampak Perubahan Iklim Produktivitas Pertanian",
+            date: "2023",
+            author: "Budiono",
+            image: DampakPerubahanIklimProduktivitasPertanian,
+            category: "Knowledge"
+        },
+        {
+            id: 5,
+            title: "Pemanfaatan Pupuk Organik VS Pupuk Kimia",
+            date: "2023",
+            author: "Budiono",
+            image: PemanfaatanPupukOrganikVsPupukKimia,
+            category: "Knowledge"
+        },
+        {
+            id: 6,
+            title: "Teknologi Irigasi Modern Untuk Efisiensi Penggunaan Air",
+            date: "2023",
+            author: "Budiono",
+            image: TeknologiIrigasiModernUntukEfisiensiPenggunaanAir,
+            category: "Knowledge"
+        },
+        {
+            id: 7,
+            title: "Peran Artificial Intelligence (AI) Dalam Pertanian Modern",
+            date: "2023",
+            author: "Budiono",
+            image: PeranAiDalamPertanianModern,
+            category: "Knowledge"
+        },
+        {
+            id: 8,
+            title: "Konsep Pertanian Untuk Berkelanjutan Masa Depan",
+            date: "2023",
+            author: "Budiono",
+            image: KonsepPertanianUntukBerkelanjutanMasaDepan,
+            category: "Knowledge"
+        },
+        {
+            id: 9,
+            title: "Manfaat Teknologi IoT Dalam PErtanian",
+            date: "2023",
+            author: "Budiono",
+            image: ManfaatTeknologiIotDalamPengelolaanLahanPertanian,
+            category: "Knowledge"
+        },
+        {
+            id: 10,
+            title: "Dampak Perubahan Iklim Terhadap Produksi Pertanian",
+            date: "2023",
+            author: "Budiono",
+            image: DampakPerubahanIklimTerhadapProduksiPertanian,
+            category: "Knowledge"
+        }
+    ];
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);

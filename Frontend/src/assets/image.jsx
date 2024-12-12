@@ -16,7 +16,6 @@ export { default as Watermark } from './watermark.png';
 export { default as WatermarkLong } from './watermark_long.png';
 export { default as SolutionsImage } from './articles/solutions.png';
 export { default as CultivationImage } from './articles/cultivation.png';
-export { default as KnowledgeImage } from './articles/knowledge.png';
 export { default as BookImage1 } from './modules/book1.png';
 export { default as BookImage2 } from './modules/book2.png';
 export { default as BookImage3 } from './modules/book3.png';
@@ -37,6 +36,7 @@ export { default as RekomendasiBudidayaPadi } from './modules/bookimage/Rekomend
 export { default as TeknikMengendalikanHamaPadi } from './modules/bookimage/Teknik Mengendalikan Hama dan Penyakit Tanaman Padi.png';
 // Tambahkan ekspor lainnya sesuai kebutuhan
 
+// Berita Images
 export { default as Berita1 } from './berita/berita1.png';
 export { default as Berita2 } from './berita/berita2.png';
 export { default as Berita3 } from './berita/berita3.png';
@@ -46,3 +46,16 @@ export { default as Berita6 } from './berita/berita6.png';
 export { default as Berita7 } from './berita/berita7.png';
 export { default as Berita8 } from './berita/berita8.png';
 export { default as Berita9 } from './berita/berita9.png';
+
+
+// Artikel Knowledges images
+export { default as BudidayaPadiOrganik } from './articles/knowledge.png';
+export { default as TeknologiUntukMasaDepanPertanian } from './articles/TeknologiUntukMasaDepanPertanian.png';
+export { default as DampakPerubahanIklimTerhadapProduksiPertanian } from './articles/DampakPerubahanIklimTerhadapProduksiPertanian.png';
+export { default as jenisTanahSuburDanCaraMengenalinya } from './articles/jenisTanahSuburDanCaraMengenalinya.png';
+export { default as PemanfaatanPupukOrganikVsPupukKimia } from './articles/PemanfaatanPupukOrganikVsPupukKimia.png';
+export { default as TeknologiIrigasiModernUntukEfisiensiPenggunaanAir } from './articles/TeknologiIrigasiModernUntukEfisiensiPenggunaanAir.png';
+export { default as PeranAiDalamPertanianModern } from './articles/PeranAiDalamPertanianModern.png';
+export { default as KonsepPertanianUntukBerkelanjutanMasaDepan } from './articles/KonsepPertanianUntukBerkelanjutanMasaDepan.png';
+export { default as ManfaatTeknologiIotDalamPengelolaanLahanPertanian } from './articles/ManfaatTeknologiIotDalamPengelolaanLahanPertanian.png';
+export { default as DampakPerubahanIklimProduktivitasPertanian } from './articles/DampakPerubahanIklimProduktivitasPertanian.png';
