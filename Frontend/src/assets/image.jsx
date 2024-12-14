@@ -59,3 +59,27 @@ export { default as PeranAiDalamPertanianModern } from './articles/PeranAiDalamP
 export { default as KonsepPertanianUntukBerkelanjutanMasaDepan } from './articles/KonsepPertanianUntukBerkelanjutanMasaDepan.png';
 export { default as ManfaatTeknologiIotDalamPengelolaanLahanPertanian } from './articles/ManfaatTeknologiIotDalamPengelolaanLahanPertanian.png';
 export { default as DampakPerubahanIklimProduktivitasPertanian } from './articles/DampakPerubahanIklimProduktivitasPertanian.png';
+
+// Artikel Solution images
+export { default as PengendalianHamaPenyakitPadiSawah } from './articles/PengendalianHamaPenyakitPadiSawah.png';
+export { default as TeknologiPertanianUntukMeningkatkanHasilPanen } from './articles/TeknologiPertanianUntukMeningkatkanHasilPanen.png';
+export { default as PertanianOrganikDalamMeningkatkanKualitasTanah } from './articles/PertanianOrganikDalamMeningkatkanKualitasTanah.png';
+export { default as TeknologiBlockchainUntukTransparansiRantaiPasokan } from './articles/TeknologiBlockchainUntukTransparansiRantaiPasokan.png';
+export { default as PenerapanInternetOfThingsIotDalamPertanian } from './articles/PenerapanInternetOfThingsIotDalamPertanian.png';
+export { default as PenggunaanMesinUntukMenyederhanakanProsesProduksi } from './articles/PenggunaanMesinUntukMenyederhanakanProsesProduksi.png';
+export { default as MenggunakanDataUntukMeningkatkanHasilTanaman } from './articles/MenggunakanDataUntukMeningkatkanHasilTanaman.png';
+export { default as PraktikUntukMenjagaKelestarianAlam } from './articles/PraktikUntukMenjagaKelestarianAlam.png';
+export { default as MengatasiKrisisRegenerasiDiSektorPertanianIndonesia } from './articles/MengatasiKrisisRegenerasiDiSektorPertanianIndonesia.png';
+export { default as AntisipasiGagalPanenDanSolusiPenanganannya } from './articles/AntisipasiGagalPanenDanSolusiPenanganannya.png';
+
+// Artikel Cultivation images
+export { default as CaraTebarBenihPadiYangTepat } from './articles/CaraTebarBenihPadiYangTepat.png';
+export { default as PanduanLengkapUntukHasilOptimal } from './articles/PanduanLengkapUntukHasilOptimal.png';
+export { default as BudidayaPadiOrganikMenjagaKeseimbanganAlam } from './articles/BudidayaPadiOrganikMenjagaKeseimbanganAlam.png';
+export { default as BudidayaPadiDiLahanGambut } from './articles/BudidayaPadiDiLahanGambut.png';
+export { default as BudidayaPadiPadaLahanSempit } from './articles/BudidayaPadiPadaLahanSempit.png';
+export { default as BudidayaPadiDiLahanPasir } from './articles/BudidayaPadiDiLahanPasir.png';
+export { default as BudidayaPadiDiLahanTerendam } from './articles/BudidayaPadiDiLahanTerendam.png';
+export { default as BudidayaPadiDenganMetodeTanamJajarLegowo } from './articles/BudidayaPadiDenganMetodeTanamJajarLegowo.png';
+export { default as BudidayaPadiDenganTeknologiDrone } from './articles/BudidayaPadiDenganTeknologiDrone.png';
+export { default as BudidayaPadiDenganTeknikTanamTumpangSari } from './articles/BudidayaPadiDenganTeknikTanamTumpangSari.png';

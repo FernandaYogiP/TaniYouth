@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
 import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { SolutionsImage, Watermark } from '../../assets/image';
+import { 
+    PengendalianHamaPenyakitPadiSawah,
+    TeknologiPertanianUntukMeningkatkanHasilPanen,
+    PertanianOrganikDalamMeningkatkanKualitasTanah,
+    TeknologiBlockchainUntukTransparansiRantaiPasokan,
+    PenerapanInternetOfThingsIotDalamPertanian,
+    PenggunaanMesinUntukMenyederhanakanProsesProduksi,
+    MenggunakanDataUntukMeningkatkanHasilTanaman,
+    PraktikUntukMenjagaKelestarianAlam,
+    MengatasiKrisisRegenerasiDiSektorPertanianIndonesia,
+    AntisipasiGagalPanenDanSolusiPenanganannya,
+    SolutionsImage, Watermark } from '../../assets/image';
 import { useState } from 'react';
 
 const Solutions = () => {
@@ -10,90 +21,89 @@ const Solutions = () => {
     const [isSearched, setIsSearched] = useState(false);
     const articlesPerPage = 9;
 
-    const articles = Array.from({ length: 12 }, (_, index) => ({
-        id: index + 1,
-        title: "Pengendalian Hama Penyakit Padi Sawah",
-        date: "Rabu, 30 Oktober 2024",
-        author: "Kementrian Pertanian",
-        image: SolutionsImage,
-        category: "solutions"
-    }));
-
     // ketika sudah ada data bisa memakai :
-    // const articles = [
-    //     {
-    //         id: 1,
-    //         title: "Pengendalian Hama Penyakit Padi Sawah",
-    //         date: "Oktober 30, 2024",
-    //         author: "Kementerian Pertanian",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 2,
-    //         title: "Mengatasi Serangan Wereng Coklat",
-    //         date: "November 15, 2024",
-    //         author: "BPTP Jawa Tengah",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 3,
-    //         title: "Solusi Penyakit Blast pada Padi",
-    //         date: "Desember 5, 2024",
-    //         author: "Balai Proteksi Tanaman",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 4,
-    //         title: "Menangani Kekeringan pada Musim Kemarau",
-    //         date: "Januari 20, 2025",
-    //         author: "Puslitbang Tanaman Pangan",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 5,
-    //         title: "Pencegahan Keracunan Besi pada Padi",
-    //         date: "Februari 8, 2025",
-    //         author: "BB Padi",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 6,
-    //         title: "Mengatasi Gulma Resisten Herbisida",
-    //         date: "Maret 15, 2025",
-    //         author: "BPTP Sumatra Utara",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 7,
-    //         title: "Solusi Penggerek Batang Padi",
-    //         date: "April 3, 2025",
-    //         author: "Balai Penelitian Padi",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 8,
-    //         title: "Menangani Banjir di Lahan Sawah",
-    //         date: "Mei 12, 2025",
-    //         author: "Dinas Pertanian Jabar",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     },
-    //     {
-    //         id: 9,
-    //         title: "Penanggulangan Tikus Sawah",
-    //         date: "Juni 25, 2025",
-    //         author: "BPTP Yogyakarta",
-    //         image: SolutionsImage,
-    //         category: "solutions"
-    //     }
-    // ];
+    const articles = [
+        {
+            id: 1,
+            title: "Pengendalian Hama Penyakit Padi Sawah",
+            date: "Oktober 30, 2024",
+            author: "Kementerian Pertanian",
+            image: PengendalianHamaPenyakitPadiSawah,
+            category: "solutions"
+        },
+        {
+            id: 2,
+            title: "Teknologi Pertanian Untuk Meningkatkan Hasil Panen",
+            date: "November 15, 2024",
+            author: "BPTP Jawa Tengah",
+            image: TeknologiPertanianUntukMeningkatkanHasilPanen,
+            category: "solutions"
+        },
+        {
+            id: 3,
+            title: "Pertanian Organik Dalam Meningkatkan Kualitas Tanah",
+            date: "Desember 5, 2024",
+            author: "Balai Proteksi Tanaman",
+            image: PertanianOrganikDalamMeningkatkanKualitasTanah,
+            category: "solutions"
+        },
+        {
+            id: 4,
+            title: "Teknologi Blockchain Untuk Transparansi Rantai Pasokan",
+            date: "Januari 20, 2025",
+            author: "Puslitbang Tanaman Pangan",
+            image: TeknologiBlockchainUntukTransparansiRantaiPasokan,
+            category: "solutions"
+        },
+        {
+            id: 5,
+            title: "Penerapan Internet of Things (IoT) Dalam Pertanian",
+            date: "Februari 8, 2025",
+            author: "BB Padi",
+            image: PenerapanInternetOfThingsIotDalamPertanian,
+            category: "solutions"
+        },
+        {
+            id: 6,
+            title: "Penggunaan Mesin Untuk Menyederhanakan Proses Produksi",
+            date: "Maret 15, 2025",
+            author: "BPTP Sumatra Utara",
+            image: PenggunaanMesinUntukMenyederhanakanProsesProduksi,
+            category: "solutions"
+        },
+        {
+            id: 7,
+            title: "Menggunakan Data Untuk Meningkatkan Hasil Tanaman",
+            date: "April 3, 2025",
+            author: "Balai Penelitian Padi",
+            image: MenggunakanDataUntukMeningkatkanHasilTanaman,
+            category: "solutions"
+        },
+        {
+            id: 8,
+            title: "Praktik Untuk Menjaga Kelestarian Alam",
+            date: "Mei 12, 2025",
+            author: "Dinas Pertanian Jabar",
+            image: PraktikUntukMenjagaKelestarianAlam,
+            category: "solutions"
+        },
+        {
+            id: 9,
+            title: "Mengatasi Krisis Regenerasi Di Sektor Pertanian Indonesia",
+            date: "Juni 25, 2025",
+            author: "BPTP Yogyakarta",
+            image: MengatasiKrisisRegenerasiDiSektorPertanianIndonesia,
+            category: "solutions"
+        },
+        {
+            id: 10,
+            title: "Antisipasi Gagal Panen Dan Solusi Penanganannya",
+            date: "Juni 25, 2025",
+            author: "BPTP Yogyakarta",
+            image: AntisipasiGagalPanenDanSolusiPenanganannya,
+            category: "solutions"
+        }
+    ];
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);

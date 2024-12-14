@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
 import { RiSearchLine, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { CultivationImage, Watermark } from '../../assets/image';
+import { 
+    CaraTebarBenihPadiYangTepat,
+    PanduanLengkapUntukHasilOptimal,
+    BudidayaPadiOrganikMenjagaKeseimbanganAlam,
+    BudidayaPadiDiLahanGambut,
+    BudidayaPadiPadaLahanSempit,
+    BudidayaPadiDiLahanPasir,
+    BudidayaPadiDiLahanTerendam,
+    BudidayaPadiDenganMetodeTanamJajarLegowo,
+    BudidayaPadiDenganTeknologiDrone,
+    BudidayaPadiDenganTeknikTanamTumpangSari,
+    CultivationImage, Watermark } from '../../assets/image';
 import { useState } from 'react';
 
 const Cultivation = () => {
@@ -10,90 +21,88 @@ const Cultivation = () => {
     const [isSearched, setIsSearched] = useState(false);
     const articlesPerPage = 9;
 
-    const articles = Array.from({ length: 12 }, (_, index) => ({
-        id: index + 1,
-        title: "Cara Tebar Benih Padi Yang Tepat",
-        date: "Januari 18, 2022",
-        author: "pustaka.setjen.pertanian",
-        image: CultivationImage,
-        category: "cultivation"
-    }));
-
-    // ketika sudah ada data bisa memakai :
-    // const articles = [
-    //     {
-    //         id: 1,
-    //         title: "Cara Tebar Benih Padi Yang Tepat",
-    //         date: "Januari 18, 2022",
-    //         author: "pustaka.setjen.pertanian",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 2,
-    //         title: "Teknik Pengolahan Lahan Sawah Modern",
-    //         date: "Februari 25, 2022",
-    //         author: "Balai Penelitian Tanaman Padi",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 3,
-    //         title: "Panduan Lengkap Sistem Tanam Jajar Legowo",
-    //         date: "Maret 10, 2022",
-    //         author: "Dinas Pertanian Jawa Timur",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 4,
-    //         title: "Manajemen Air untuk Budidaya Padi Sawah",
-    //         date: "April 5, 2022",
-    //         author: "BPTP Jawa Barat",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 5,
-    //         title: "Pemupukan Berimbang pada Tanaman Padi",
-    //         date: "Mei 15, 2022",
-    //         author: "Kementerian Pertanian",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 6,
-    //         title: "Teknik Penyiangan yang Efektif",
-    //         date: "Juni 20, 2022",
-    //         author: "Balitbangtan",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 7,
-    //         title: "Persiapan Lahan untuk Musim Tanam",
-    //         date: "Juli 8, 2022",
-    //         author: "BPTP Sulawesi Selatan",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 8,
-    //         title: "Panduan Pemilihan Bibit Unggul",
-    //         date: "Agustus 12, 2022",
-    //         author: "BB Padi",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     },
-    //     {
-    //         id: 9,
-    //         title: "Teknik Panen dan Pasca Panen",
-    //         date: "September 30, 2022",
-    //         author: "Puslitbangtan",
-    //         image: CultivationImage,
-    //         category: "cultivation"
-    //     }
-    // ];
+    const articles = [
+        {
+            id: 1,
+            title: "Cara Tebar Benih Padi Yang Tepat",
+            date: "Januari 18, 2022",
+            author: "pustaka.setjen.pertanian",
+            image: CaraTebarBenihPadiYangTepat,
+            category: "cultivation"
+        },
+        {
+            id: 2,
+            title: "Panduan Lengkap Untuk Hasil Optimal",
+            date: "Februari 25, 2022",
+            author: "Balai Penelitian Tanaman Padi",
+            image: PanduanLengkapUntukHasilOptimal,
+            category: "cultivation"
+        },
+        {
+            id: 3,
+            title: "Budidaya Padi Organik Menjaga Keseimbangan Alam",
+            date: "Maret 10, 2022",
+            author: "Dinas Pertanian Jawa Timur",
+            image: BudidayaPadiOrganikMenjagaKeseimbanganAlam,
+            category: "cultivation"
+        },
+        {
+            id: 4,
+            title: "Budidaya Padi Di Lahan Gambut",
+            date: "April 5, 2022",
+            author: "BPTP Jawa Barat",
+            image: BudidayaPadiDiLahanGambut,
+            category: "cultivation"
+        },
+        {
+            id: 5,
+            title: "Budidaya Padi Pada Lahan Sempit",
+            date: "Mei 15, 2022",
+            author: "Kementerian Pertanian",
+            image: BudidayaPadiPadaLahanSempit,
+            category: "cultivation"
+        },
+        {
+            id: 6,
+            title: "Budidaya Padi Di Lahan Pasir",
+            date: "Juni 20, 2022",
+            author: "Balitbangtan",
+            image: BudidayaPadiDiLahanPasir,
+            category: "cultivation"
+        },
+        {
+            id: 7,
+            title: "Budidaya Padi Di Lahan Terendam",
+            date: "Juli 8, 2022",
+            author: "BPTP Sulawesi Selatan",
+            image: BudidayaPadiDiLahanTerendam,
+            category: "cultivation"
+        },
+        {
+            id: 8,
+            title: "Budidaya Padi Dengan Metode Tanam Jajar Legowo",
+            date: "Agustus 12, 2022",
+            author: "BB Padi",
+            image: BudidayaPadiDenganMetodeTanamJajarLegowo,
+            category: "cultivation"
+        },
+        {
+            id: 9,
+            title: "Budidaya Padi Dengan Teknologi Drone",
+            date: "September 30, 2022",
+            author: "Puslitbangtan",
+            image: BudidayaPadiDenganTeknologiDrone,
+            category: "cultivation"
+        },
+        {
+            id: 10,
+            title: "Budidaya Padi Dengan Teknik Tanam Tumpang Sari",
+            date: "September 30, 2022",
+            author: "Puslitbangtan",
+            image: BudidayaPadiDenganTeknikTanamTumpangSari,
+            category: "cultivation"
+        }
+    ];
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
