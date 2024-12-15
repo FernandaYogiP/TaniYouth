@@ -305,6 +305,38 @@ const updatePassword = async (req, res) => {
     }
 };
 
+ const addDiscussion = async (req, res) => {
+  const { opinion } = req.body;
+  const token = req.headers["authorization"];
+
+  if (!token) {
+    console.log("Token hilang")
+    return res.status(403).json({ message: "Anda harus login terlebih dahulu!" });
+ }
+
+ const tokenWithoutBearer = token.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+    const queryString = "INSERT INTO discussions (user_id, opinion) VALUES (?, ?)";
+    await query(queryString, [userId, opinion]);
+    res.status(201).json({ message: "Discussion added successfully" }); 
+  } catch (error) {
+    console.log(err);
+    response.status(403).json({ message: "Internal server error" });
+  }
+};
+
+const getDiscussions = async (req, res) => {
+  try {
+    const result = await query("SELECT discussions.id, users.username AS sender, discussions.opinion, discussions.created_at AS time FROM discussions INNER JOIN users ON discussions.user_id = users.id ORDER BY discussions.created_at DESC");
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "gagal mendapatkan diskusi" });
+  }
+}
+
 export {
   signup,
   login,
@@ -314,5 +346,7 @@ export {
   updatePassword,
   updateName,
   addPhoneNumber,
+  addDiscussion,
+  getDiscussions,
   upload
 };

@@ -1,20 +1,55 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FaCamera, FaUpload, FaChevronDown, FaImage, FaFileAlt } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const DiseaseDetection = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedFileType, setSelectedFileType] = useState('image');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [result, setResult] = useState(null);
+    const navigate = useNavigate();
 
-    const onDrop = useCallback((acceptedFiles) => {
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/Pages/Login');
+        }
+    }, [navigate]); 
+
+    const onDrop = useCallback(async (acceptedFiles) => {
         const file = acceptedFiles[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setSelectedImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setSelectedImage(URL.createObjectURL(file)); 
+            setLoading(true);
+            setError(null);
+    
+            try {
+                const token = localStorage.getItem('authToken'); 
+                const formData = new FormData();
+                formData.append('file', file);
+    
+                const response = await axios.post(
+                    'https://project-1.1pgwqqw523uf.us-south.codeengine.appdomain.cloud/predict',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization:`Bearer ${token}`,
+                        },
+                    }
+                );
+                console.log('API Response:', response.data);
+                setResult(response.data); // Simpan hasil deteksi
+            } catch (error) {
+                setError('Deteksi gambar gagal');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
         }
     }, []);
 
@@ -24,58 +59,59 @@ const DiseaseDetection = () => {
             'image/*': []
         },
         multiple: false,
-        noClick: true // Disable click to select files
+        noClick: true
     });
 
-    const handleFileUpload = (event) => {
+    const handleFileUpload = async (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => {
+            reader.onloadend = async () => {
                 setSelectedImage(reader.result);
+
+                setLoading(true);
+                setError(null);
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await axios.post(
+                        'https://project-1.1pgwqqw523uf.us-south.codeengine.appdomain.cloud/predict',
+                        formData,
+                        { headers: { 'Content-Type': 'multipart/form-data' } }
+                    );
+                    console.log('API Response:', response.data);  
+                    setResult(response.data);  
+                } catch (error) {
+                    setError('File upload failed');
+                    console.error(error);
+                } finally {
+                    setLoading(false);
+                }
             };
             reader.readAsDataURL(file);
         }
     };
 
-    const handlePaste = (event) => {
-        const items = event.clipboardData?.items;
-        if (items) {
-            for (let item of items) {
-                if (item.type.indexOf('image') !== -1) {
-                    const file = item.getAsFile();
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        setSelectedImage(reader.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        }
-    };
-
     const getAcceptTypes = () => {
-        return selectedFileType === 'image' 
+        return selectedFileType === 'image'
             ? "image/*"
             : ".pdf,.doc,.docx,.txt";
     };
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Title Block */}
             <div className="bg-[#114232] text-white text-center py-4 mb-8">
                 <h1 className="text-3xl font-bold">DETEKSI PENYAKIT</h1>
             </div>
 
-            {/* Main Content */}
             <div className="container mx-auto px-4 py-8">
                 <div className="max-w-2xl mx-auto">
-                    {/* Image Preview Area */}
                     <div className="mb-8 aspect-video bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                         {selectedImage ? (
-                            <img 
-                                src={selectedImage} 
-                                alt="Preview" 
+                            <img
+                                src={selectedImage}
+                                alt="Preview"
                                 className="max-w-full max-h-full object-contain"
                             />
                         ) : (
@@ -86,9 +122,7 @@ const DiseaseDetection = () => {
                         )}
                     </div>
 
-                    {/* Upload Controls */}
                     <div className="flex flex-col items-center gap-4">
-                        {/* File Upload Button with Dropdown */}
                         <div className="relative">
                             <div className="flex">
                                 <label className="bg-[#114232] hover:bg-[#1a5c45] text-white px-6 py-3 rounded-l-md cursor-pointer transition-colors duration-300 flex items-center gap-2">
@@ -108,8 +142,6 @@ const DiseaseDetection = () => {
                                     <FaChevronDown />
                                 </button>
                             </div>
-                            
-                            {/* Dropdown Menu */}
                             {isDropdownOpen && (
                                 <div className="absolute mt-1 w-full bg-white border border-[#114232] rounded-md shadow-lg z-10 overflow-hidden">
                                     <button
@@ -137,14 +169,9 @@ const DiseaseDetection = () => {
                             )}
                         </div>
 
-                        {/* Drag & Drop Area */}
-                        <div 
-                            {...getRootProps()} 
-                            className={`w-full text-center p-4 border-2 border-dashed rounded-md transition-colors duration-300 ${
-                                isDragActive 
-                                    ? 'border-[#114232] bg-[#e8f5e9] text-[#114232]' 
-                                    : 'border-gray-300 text-gray-400'
-                            }`}
+                        <div
+                            {...getRootProps()}
+                            className={`w-full text-center p-4 border-2 border-dashed rounded-md transition-colors duration-300 ${isDragActive ? 'border-[#114232] bg-[#e8f5e9] text-[#114232]' : 'border-gray-300 text-gray-400'}`}
                         >
                             <input {...getInputProps()} />
                             <div className="flex flex-col items-center gap-2">
@@ -152,6 +179,16 @@ const DiseaseDetection = () => {
                                 <p>{isDragActive ? 'Lepaskan file di sini...' : 'Seret dan lepaskan file di sini'}</p>
                             </div>
                         </div>
+
+                        {loading && <p>Loading...</p>}
+                        {error && <p className="text-red-500">{error}</p>}
+
+                        {result && (
+                            <div className="mt-5 p-4 bg-[#e8f5e9] border border-[#114232] rounded-lg">
+                                <h2 className="text-xl font-bold text-[#114232] text-center">Hasil Deteksi</h2>
+                                <p className='text-[#114232]'>{result.class_name || 'No result data'}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
