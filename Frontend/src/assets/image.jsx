@@ -52,7 +52,7 @@ export { default as Berita9 } from './berita/Berita9.png';
 export { default as BudidayaPadiOrganik } from './articles/knowledge.png';
 export { default as TeknologiUntukMasaDepanPertanian } from './articles/TeknologiUntukMasaDepanPertanian.png';
 export { default as DampakPerubahanIklimTerhadapProduksiPertanian } from './articles/DampakPerubahanIklimTerhadapProduksiPertanian.png';
-export { default as jenisTanahSuburDanCaraMengenalinya } from './articles/jenisTanahSuburDanCaraMengenalinya.png';
+export { default as jenisTanahSuburDanCaraMengenalinya } from './articles/JenisTanahSuburDanCaraMengenalinya.png';
 export { default as PemanfaatanPupukOrganikVsPupukKimia } from './articles/PemanfaatanPupukOrganikVsPupukKimia.png';
 export { default as TeknologiIrigasiModernUntukEfisiensiPenggunaanAir } from './articles/TeknologiIrigasiModernUntukEfisiensiPenggunaanAir.png';
 export { default as PeranAiDalamPertanianModern } from './articles/PeranAiDalamPertanianModern.png';
@@ -83,4 +83,3 @@ export { default as BudidayaPadiDiLahanTerendam } from './articles/BudidayaPadiD
 export { default as BudidayaPadiDenganMetodeTanamJajarLegowo } from './articles/BudidayaPadiDenganMetodeTanamJajarLegowo.png';
 export { default as BudidayaPadiDenganTeknologiDrone } from './articles/BudidayaPadiDenganTeknologiDrone.png';
 export { default as BudidayaPadiDenganTeknikTanamTumpangSari } from './articles/BudidayaPadiDenganTeknikTanamTumpangSari.png';
-
