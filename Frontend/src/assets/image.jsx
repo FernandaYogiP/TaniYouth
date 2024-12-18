@@ -37,15 +37,15 @@ export { default as TeknikMengendalikanHamaPadi } from './modules/bookimage/Tekn
 // Tambahkan ekspor lainnya sesuai kebutuhan
 
 // Berita Images
-export { default as Berita1 } from './berita/berita1.png';
-export { default as Berita2 } from './berita/berita2.png';
-export { default as Berita3 } from './berita/berita3.png';
-export { default as Berita4 } from './berita/berita4.png';
-export { default as Berita5 } from './berita/berita5.png';
-export { default as Berita6 } from './berita/berita6.png';
-export { default as Berita7 } from './berita/berita7.png';
-export { default as Berita8 } from './berita/berita8.png';
-export { default as Berita9 } from './berita/berita9.png';
+export { default as Berita1 } from './berita/Berita1.png';
+export { default as Berita2 } from './berita/Berita2.png';
+export { default as Berita3 } from './berita/Berita3.png';
+export { default as Berita4 } from './berita/Berita4.png';
+export { default as Berita5 } from './berita/Berita5.png';
+export { default as Berita6 } from './berita/Berita6.png';
+export { default as Berita7 } from './berita/Berita7.png';
+export { default as Berita8 } from './berita/Berita8.png';
+export { default as Berita9 } from './berita/Berita9.png';
 
 
 // Artikel Knowledges images
@@ -83,3 +83,4 @@ export { default as BudidayaPadiDiLahanTerendam } from './articles/BudidayaPadiD
 export { default as BudidayaPadiDenganMetodeTanamJajarLegowo } from './articles/BudidayaPadiDenganMetodeTanamJajarLegowo.png';
 export { default as BudidayaPadiDenganTeknologiDrone } from './articles/BudidayaPadiDenganTeknologiDrone.png';
 export { default as BudidayaPadiDenganTeknikTanamTumpangSari } from './articles/BudidayaPadiDenganTeknikTanamTumpangSari.png';
+
